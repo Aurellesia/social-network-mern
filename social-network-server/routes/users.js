@@ -1,9 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+const passport = require("passport");
+const LocalStrategy = require("passport-local").Strategy;
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+const authController = require("../controllers/users");
+
+passport.use(
+  new LocalStrategy({ usernameField: "email" }, authController.localStrategy)
+);
+router.post("/register", authController.register);
+router.post("/login", authController.login);
+router.post("/logout", authController.logout);
 
 module.exports = router;
