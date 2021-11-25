@@ -30,6 +30,10 @@ let userSchema = new Schema(
       required: [true, "Password cannot be empty"],
       maxlength: [100, "Maximum password length is 100 characters"],
     },
+    // confirm_password: {
+    //   type: String,
+    //   required: [true, "Confirm password cannot be empty"],
+    // },
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -59,6 +63,13 @@ userSchema.path("email").validate(
   },
   (attr) => `${attr.value} already registered`
 );
+
+// userSchema.path("confirm_password").validate(
+//   function (value) {
+//     return this.password === value;
+//   },
+//   () => `Password missmatch`
+// );
 
 const HASH_ROUND = 10;
 userSchema.pre("save", function (next) {

@@ -16,7 +16,6 @@ const register = async (req, res, next) => {
       return res.json({
         error: 1,
         message: err.message,
-        fields: err.errors,
       });
     }
     next(err);
@@ -50,6 +49,7 @@ const login = async (req, res, next) => {
         });
       }
       let signed = jwt.sign(user, config.secretKey);
+      console.log(user);
       await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
       res.json({
         message: "Login Success",
