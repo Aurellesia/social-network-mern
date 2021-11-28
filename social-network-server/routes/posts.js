@@ -14,5 +14,12 @@ router.post(
 );
 
 router.get("/posts", verifyToken, postController.index);
+router.delete("/posts/:id", verifyToken, postController.destroy);
+router.put(
+  "/posts/:id",
+  verifyToken,
+  multer({ dest: os.tmpdir() }).array("files", 5),
+  postController.update
+);
 
 module.exports = router;

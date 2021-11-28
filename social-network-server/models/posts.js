@@ -9,6 +9,7 @@ let postSchema = new Schema(
     },
     text: {
       type: String,
+      required: [true, "Text cannot be empty"],
       maxlength: [300, "Maximum text 300 characters"],
     },
     videos: [String],
