@@ -1,0 +1,65 @@
+const Post = require("../models/posts");
+const User = require("../models/users");
+
+const like = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const user = req.user.user_id;
+    let post = await Post.findById({ _id: id });
+    if (post.likes.indexOf(user) === -1) {
+      post = await Post.findByIdAndUpdate(
+        { _id: id },
+        { $push: { likes: user } },
+        { new: true, runValidators: true }
+      );
+    } else {
+      post = await Post.findByIdAndUpdate(
+        { _id: id },
+        { $pull: { likes: user } },
+        { new: true, runValidators: true }
+      );
+    }
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: `No post found`,
+      });
+    }
+    return res.json(post);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
+const index = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const post = await Post.findById({ _id: id });
+    const likeList = post.likes;
+    let liker = await Promise.all(
+      likeList.map(async (item) => {
+        let user = await User.findOne({ user_id: item });
+        return user;
+      })
+    );
+    return res.json(liker);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
+module.exports = { like, index };

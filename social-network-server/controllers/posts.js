@@ -238,4 +238,5 @@ const destroy = async (req, res, next) => {
     next(err);
   }
 };
+
 module.exports = { store, index, destroy, update };

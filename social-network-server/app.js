@@ -10,6 +10,8 @@ const usersRouter = require("./routes/users");
 const accountRouter = require("./routes/accounts");
 const profileRouter = require("./routes/profiles");
 const postRouter = require("./routes/posts");
+const timelineRouter = require("./routes/timeline");
+const likesRouter = require("./routes/likes");
 
 const app = express();
 
@@ -28,6 +30,8 @@ app.use("/auth", usersRouter);
 app.use("/api", accountRouter);
 app.use("/api", profileRouter);
 app.use("/api", postRouter);
+app.use("/api", timelineRouter);
+app.use("/api", likesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
