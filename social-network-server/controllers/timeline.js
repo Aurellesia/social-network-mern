@@ -2,7 +2,7 @@ const Post = require("../models/posts");
 
 const timeline = async (req, res, next) => {
   try {
-    let post = await Post.find();
+    let post = await Post.find().populate("comments");
     if (!post) {
       return res.json({
         error: 1,
