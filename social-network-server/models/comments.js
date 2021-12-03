@@ -16,7 +16,7 @@ let commentSchema = new Schema(
       required: [true, "Text cannot be empty"],
       maxlength: [1000, "Maximum text 1000 characters"],
     },
-    likes: [Number],
+    likes: [Schema.Types.ObjectId],
     replies: [Object],
   },
   { timestamps: true }

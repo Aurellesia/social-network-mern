@@ -116,7 +116,7 @@ const destroy = async (req, res, next) => {
 const like = async (req, res, next) => {
   try {
     const { commentId } = req.params;
-    const user = req.user.user_id;
+    const user = req.user;
     let comment = await Comment.findById({ _id: commentId });
     console.log(comment);
     if (comment.likes.indexOf(user) === -1) {

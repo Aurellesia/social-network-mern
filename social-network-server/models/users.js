@@ -6,9 +6,6 @@ const Profile = require("./profiles");
 
 let userSchema = new Schema(
   {
-    user_id: {
-      type: Number,
-    },
     first_name: {
       type: String,
       required: [true, "First name cannot be empty"],
@@ -66,8 +63,6 @@ userSchema.pre("save", function (next) {
   this.password = bcrypt.hashSync(this.password, HASH_ROUND);
   next();
 });
-
-userSchema.plugin(AutoIncrement, { inc_field: "user_id" });
 
 userSchema.post("save", async function () {
   let profile = new Profile({

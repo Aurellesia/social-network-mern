@@ -13,6 +13,7 @@ const postRouter = require("./routes/posts");
 const timelineRouter = require("./routes/timeline");
 const likesRouter = require("./routes/likes");
 const commentsRouter = require("./routes/comments");
+const followsRouter = require("./routes/follows");
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use("/api", postRouter);
 app.use("/api", timelineRouter);
 app.use("/api", likesRouter);
 app.use("/api", commentsRouter);
+app.use("/api", followsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

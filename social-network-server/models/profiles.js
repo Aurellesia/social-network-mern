@@ -61,8 +61,8 @@ let profileSchema = new Schema(
       maxLength: [100, "Maximum telegram length is 100 characters"],
       default: "",
     },
+    followers: [Schema.Types.ObjectId],
   },
   { timestamps: true }
 );
-
 module.exports = model("Profile", profileSchema);
