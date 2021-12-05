@@ -4,7 +4,7 @@ const User = require("../models/users");
 const like = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const user = req.user;
+    const user = req.user._id;
     let post = await Post.findById({ _id: id });
     if (post.likes.indexOf(user) === -1) {
       post = await Post.findByIdAndUpdate(
@@ -42,10 +42,11 @@ const index = async (req, res, next) => {
   try {
     const { id } = req.params;
     const post = await Post.findById({ _id: id });
+    console.log(post);
     const likeList = post.likes;
     let liker = await Promise.all(
       likeList.map(async (item) => {
-        let user = await User.findOne({ _id: item });
+        let user = await User.findById({ _id: item });
         return user;
       })
     );

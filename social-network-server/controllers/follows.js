@@ -1,16 +1,15 @@
-const Profile = require("../models/profiles");
 const User = require("../models/users");
 const { ObjectId } = require("mongodb");
 
 const follows = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const userFollowing = ObjectId(req.user._id);
-    let userFollower = await Profile.findOne({ user: id });
+    const userFollowing = req.user._id;
+    let userFollower = await User.findById({ _id: id });
     if (id !== req.user._id) {
       if (userFollower.followers.toString().indexOf(userFollowing) === -1) {
-        userFollower = await Profile.findOneAndUpdate(
-          { user: id },
+        userFollower = await User.findByIdAndUpdate(
+          { _id: id },
           { $push: { followers: userFollowing } },
           {
             new: true,
@@ -18,8 +17,8 @@ const follows = async (req, res, next) => {
           }
         );
       } else {
-        userFollower = await Profile.findOneAndUpdate(
-          { user: id },
+        userFollower = await User.findByIdAndUpdate(
+          { _id: id },
           { $pull: { followers: userFollowing } },
           {
             new: true,
@@ -57,13 +56,20 @@ const follows = async (req, res, next) => {
 const followers = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const user = await Profile.findOne({ user: userId });
+    const user = await User.findById({ _id: userId });
+    console.log(user.followers);
     const followers = await Promise.all(
       user.followers.map(async (item) => {
-        let user = await User.findOne({ _id: item });
+        console.log(item);
+        let user = await User.findById({ _id: item });
         return user;
       })
     );
+    if (followers.length === 0) {
+      return res.json({
+        message: "You don't have any followers.",
+      });
+    }
     return res.json(followers);
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -80,13 +86,18 @@ const followers = async (req, res, next) => {
 const following = async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const following = await Profile.find({ followers: { $in: [userId] } });
+    const following = await User.find({ followers: { $in: [userId] } });
     const user = await Promise.all(
       following.map(async (item) => {
-        let user = await User.findOne({ _id: item.user });
+        let user = await User.findById({ _id: item.user });
         return user;
       })
     );
+    if (user.length === 0) {
+      return res.json({
+        message: "You are not following anyone.",
+      });
+    }
     return res.json(user);
   } catch (err) {
     if (err && err.name === "ValidationError") {

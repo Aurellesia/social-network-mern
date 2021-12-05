@@ -1,4 +1,4 @@
-const Profile = require("../models/profiles");
+const User = require("../models/users");
 const path = require("path");
 const fs = require("fs");
 const config = require("../config");
@@ -6,13 +6,7 @@ const config = require("../config");
 const index = async (req, res, next) => {
   try {
     const user = req.user;
-    let profile = await Profile.findOne({ user: user._id });
-    if (!profile) {
-      return res.json({
-        error: 1,
-        message: `Error while getting profile`,
-      });
-    }
+    let profile = await User.findById({ _id: user._id });
     return res.json(profile);
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -28,8 +22,8 @@ const index = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     let payload = req.body;
-    const profile = await Profile.findOneAndUpdate(
-      { user: req.user._id },
+    const profile = await User.findByIdAndUpdate(
+      { _id: req.user._id },
       payload,
       {
         new: true,
@@ -65,11 +59,11 @@ const updateProfilePicture = async (req, res, next) => {
 
   src.on("end", async () => {
     try {
-      let profile = await Profile.findOne({ user: req.user._id });
+      let profile = await User.findById({ _id: req.user._id });
       let previousImage = `${config.rootPath}/public/images/profiles/${profile.picture}`;
 
-      profile = await Profile.findOneAndUpdate(
-        { user: req.user._id },
+      profile = await User.findByIdAndUpdate(
+        { _id: req.user._id },
         { picture: filename },
         { new: true, runValidators: true }
       );
@@ -94,14 +88,14 @@ const updateProfilePicture = async (req, res, next) => {
 const destroyProfilePicture = async (req, res, next) => {
   try {
     const imageUrl = `${config.rootPath}/public/images/profiles/`;
-    let profile = await Profile.findOne({ user: req.user._id });
+    let profile = await User.findById({ _id: req.user._id });
     let previousImage = `${imageUrl}${profile.picture}`;
     if (previousImage !== imageUrl) {
       fs.unlinkSync(previousImage);
     }
     if (profile.picture !== "") {
-      profile = await Profile.findOneAndUpdate(
-        { user: req.user._id },
+      profile = await User.findByIdAndUpdate(
+        { _id: req.user._id },
         { picture: "" },
         { new: true, runValidators: true }
       );
