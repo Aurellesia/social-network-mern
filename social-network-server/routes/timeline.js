@@ -4,6 +4,7 @@ const { verifyToken } = require("../middlewares");
 
 const timelineController = require("../controllers/timeline");
 
-router.get("/timeline", verifyToken, timelineController.timeline);
+router.get("/", verifyToken, timelineController.timeline);
+router.get("/search", verifyToken, timelineController.search);
 
 module.exports = router;

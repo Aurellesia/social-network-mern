@@ -1,5 +1,4 @@
 const User = require("../models/users");
-const { ObjectId } = require("mongodb");
 
 const follows = async (req, res, next) => {
   try {
