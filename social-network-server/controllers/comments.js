@@ -8,11 +8,17 @@ const store = async (req, res, next) => {
     const { text } = req.body;
     const comment = new Comment({ user, post: id, text });
     await comment.save();
-    await Post.findOneAndUpdate(
+    const post = await Post.findOneAndUpdate(
       { _id: id },
       { $push: { comments: comment._id } },
       { new: true, runValidators: true }
     );
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: "Post not found!",
+      });
+    }
     return res.json(comment);
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -30,6 +36,12 @@ const index = async (req, res, next) => {
   try {
     const { id } = req.params;
     const post = await Post.findOne({ _id: id });
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: "Post not found!",
+      });
+    }
     let comment = await Promise.all(
       post.comments.map(async (item) => {
         let commentText = await Comment.findById({ _id: item });
@@ -65,10 +77,14 @@ const update = async (req, res, next) => {
     if (comment === null) {
       res.json({
         err: 1,
-        message: "You are not allowed to edit this comment",
+        message:
+          "Comment not found or you are not allowed to edit this comment",
       });
     }
-    return res.json(comment);
+    return res.json({
+      message: `Update comment success`,
+      data: comment,
+    });
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -89,7 +105,8 @@ const destroy = async (req, res, next) => {
     if (comment === null) {
       res.json({
         err: 1,
-        message: "You are not allowed to edit this comment",
+        message:
+          "Comment not found or you are not allowed to delete this comment",
       });
     } else {
       await Post.findOneAndUpdate(
@@ -99,7 +116,9 @@ const destroy = async (req, res, next) => {
       );
     }
 
-    return res.json(comment);
+    return res.json({
+      message: "Delete comment success",
+    });
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -117,7 +136,12 @@ const like = async (req, res, next) => {
     const { commentId } = req.params;
     const user = req.user._id;
     let comment = await Comment.findById({ _id: commentId });
-    console.log(comment);
+    if (!comment) {
+      res.json({
+        err: 1,
+        message: "Comment not found!",
+      });
+    }
     if (comment.likes.indexOf(user) === -1) {
       comment = await Comment.findByIdAndUpdate(
         { _id: commentId },

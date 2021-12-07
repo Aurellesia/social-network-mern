@@ -15,7 +15,16 @@ const changePassword = async (req, res, next) => {
       },
       { new: true, runValidators: true }
     );
-    return res.json(user);
+    if (!user) {
+      res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
+    return res.json({
+      message: "Change password success",
+      data: user,
+    });
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({

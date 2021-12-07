@@ -3,11 +3,11 @@ const User = require("../models/users");
 
 const timeline = async (req, res, next) => {
   try {
-    let post = await Post.find();
+    let post = await Post.find().sort({ createdAt: -1 });
     if (!post) {
       return res.json({
         error: 1,
-        message: `No post found`,
+        message: `Post not found!`,
       });
     }
     return res.json(post);

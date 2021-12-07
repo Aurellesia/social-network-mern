@@ -52,7 +52,7 @@ const login = async (req, res, next) => {
       await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
       res.json({
         message: "Login Success",
-        user,
+        data: user,
         token: signed,
       });
     } catch (err) {
@@ -72,7 +72,7 @@ const logout = async (req, res, next) => {
   if (!token || !user) {
     res.json({
       error: 1,
-      message: "No user found!",
+      message: "User not found!",
     });
   }
   return res.json({

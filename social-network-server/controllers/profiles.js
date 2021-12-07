@@ -7,6 +7,12 @@ const index = async (req, res, next) => {
   try {
     const user = req.user;
     let profile = await User.findById({ _id: user._id });
+    if (!profile) {
+      return res.json({
+        error: 1,
+        message: "No user found!",
+      });
+    }
     return res.json(profile);
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -30,7 +36,18 @@ const update = async (req, res, next) => {
         runValidators: true,
       }
     );
-    return res.json(profile);
+    if (!profile) {
+      return res.json({
+        error: 1,
+        message: "No user found!",
+      });
+    }
+    const result = {
+      message: "Update success",
+      data: profile,
+    };
+
+    return res.json(result);
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -43,7 +60,15 @@ const update = async (req, res, next) => {
 };
 
 const updateProfilePicture = async (req, res, next) => {
-  let tmp_path = req.file.path;
+  const file = req.file;
+  if (!file) {
+    return res.json({
+      error: 1,
+      message: "No file selected",
+    });
+  }
+
+  let tmp_path = file.path;
   let originalExt =
     req.file.originalname.split(".")[
       req.file.originalname.split(".").length - 1
@@ -60,8 +85,13 @@ const updateProfilePicture = async (req, res, next) => {
   src.on("end", async () => {
     try {
       let profile = await User.findById({ _id: req.user._id });
+      if (!profile) {
+        return res.json({
+          error: 1,
+          message: "User not found!",
+        });
+      }
       let previousImage = `${config.rootPath}/public/images/profiles/${profile.picture}`;
-
       profile = await User.findByIdAndUpdate(
         { _id: req.user._id },
         { picture: filename },
@@ -70,7 +100,10 @@ const updateProfilePicture = async (req, res, next) => {
       if (previousImage !== `${config.rootPath}/public/images/profiles/`) {
         fs.unlinkSync(previousImage);
       }
-      return res.json(profile);
+      return res.json({
+        message: "Update profile picture success",
+        data: profile,
+      });
     } catch (err) {
       fs.unlinkSync(target_path);
       if (err && err.name === "ValidationError") {
@@ -89,6 +122,12 @@ const destroyProfilePicture = async (req, res, next) => {
   try {
     const imageUrl = `${config.rootPath}/public/images/profiles/`;
     let profile = await User.findById({ _id: req.user._id });
+    if (!profile) {
+      return res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
     let previousImage = `${imageUrl}${profile.picture}`;
     if (previousImage !== imageUrl) {
       fs.unlinkSync(previousImage);
@@ -100,7 +139,10 @@ const destroyProfilePicture = async (req, res, next) => {
         { new: true, runValidators: true }
       );
     }
-    return res.json(profile);
+    return res.json({
+      message: "Delete profile picture success",
+      data: profile,
+    });
   } catch {
     if (err && err.name === "ValidationError") {
       return res.json({

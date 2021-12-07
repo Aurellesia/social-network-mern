@@ -5,6 +5,12 @@ const follows = async (req, res, next) => {
     const { id } = req.params;
     const userFollowing = req.user._id;
     let userFollower = await User.findById({ _id: id });
+    if (!userFollower) {
+      return res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
     if (id !== req.user._id) {
       if (userFollower.followers.toString().indexOf(userFollowing) === -1) {
         userFollower = await User.findByIdAndUpdate(
@@ -56,7 +62,12 @@ const followers = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const user = await User.findById({ _id: userId });
-    console.log(user.followers);
+    if (!userFollower) {
+      return res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
     const followers = await Promise.all(
       user.followers.map(async (item) => {
         console.log(item);
@@ -86,6 +97,12 @@ const following = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const following = await User.find({ followers: { $in: [userId] } });
+    if (!userFollower) {
+      return res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
     const user = await Promise.all(
       following.map(async (item) => {
         let user = await User.findById({ _id: item.user });

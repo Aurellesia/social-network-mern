@@ -79,7 +79,6 @@ const store = async (req, res, next) => {
       return res.json({
         error: 1,
         message: err.message,
-        fields: err.errors,
       });
     }
     next(err);
@@ -89,11 +88,11 @@ const store = async (req, res, next) => {
 const index = async (req, res, next) => {
   try {
     const user = req.user;
-    let post = await Post.find({ user: user._id }).populate("comments");
+    let post = await Post.find({ user: user._id });
     if (!post) {
       return res.json({
         error: 1,
-        message: `No post found`,
+        message: `Post not found!`,
       });
     }
     return res.json(post);
@@ -117,6 +116,12 @@ const update = async (req, res, next) => {
     let objectFile = [];
     let fileImage = "";
     let post = await Post.findOne({ _id: id, user: user._id });
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: `Post not found!`,
+      });
+    }
     let currentImages = post.images;
     let currentVideos = post.videos;
     if (req.files.length !== 0) {
@@ -181,16 +186,21 @@ const update = async (req, res, next) => {
         },
         { new: true, runValidators: true }
       );
-      res.json(post);
+      return res.json({
+        message: "Update post success",
+        data: post,
+      });
     } else {
-      console.log(currentImages);
       post = await Post.findByIdAndUpdate(
         { _id: id },
         {
           text,
         }
       );
-      res.json(post);
+      return res.json({
+        message: "Update post success",
+        data: post,
+      });
     }
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -211,6 +221,12 @@ const destroy = async (req, res, next) => {
     let currentFiles = [];
     let fileImage = "";
     let post = await Post.findOneAndDelete({ _id: id, user: user._id });
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: `Post not found!`,
+      });
+    }
     let currentImages = post.images;
     let currentVideos = post.videos;
     currentImages.forEach((item) => {
@@ -226,7 +242,9 @@ const destroy = async (req, res, next) => {
         fs.unlinkSync(item);
       }
     });
-    return res.json(post);
+    return res.json({
+      message: "Delete post success",
+    });
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
