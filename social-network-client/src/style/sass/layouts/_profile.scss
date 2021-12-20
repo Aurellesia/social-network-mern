@@ -1,0 +1,332 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 2rem;
+  .main-profile-pict {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+    border: 5px solid $White;
+    align-self: center;
+    margin: 2rem 0;
+    object-fit: cover;
+  }
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  .card-followers {
+    @include card(140px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .followers-content {
+      display: flex;
+      flex-direction: column;
+      .text-14 {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .text-24-bold {
+        margin: 0 1.5rem 0.5rem 1.5rem;
+      }
+    }
+  }
+
+  .card-about-me {
+    @include card(auto, 290px);
+    padding: 1.5rem;
+    .about-me-content {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 1rem;
+      .text-18-bold {
+        margin-bottom: 1rem;
+      }
+      hr {
+        color: $Black;
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .edu-work {
+        margin: 1rem 0 0 0;
+        display: flex;
+        align-items: center;
+        .about-me-icon {
+          @include icon(30px, 1rem);
+        }
+      }
+    }
+  }
+
+  .card-contact-me {
+    @include card();
+    padding: 1.5rem;
+    .contact-me-content {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      .text-18-bold {
+        margin-bottom: 1rem;
+      }
+      .sosmed {
+        .contact-me-icon {
+          @include icon(40px, 0.5rem);
+          &:hover {
+            color: $Fawn;
+          }
+        }
+      }
+    }
+  }
+
+  .card-gallery {
+    @include card();
+    padding: 1.5rem;
+    .gallery-content {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      .text-18-bold {
+        margin-bottom: 1rem;
+      }
+      .pict-container {
+        width: 100%;
+        display: grid;
+        grid-gap: 1rem 1rem;
+        grid-template-columns: auto auto auto;
+        justify-content: center;
+        .gallery-pict {
+          width: 80px;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+
+  .card-posting {
+    @include card(auto, 500px);
+    padding: 1rem;
+    .create-post {
+      border: 1px solid $SilverSand;
+      border-radius: 20px;
+      background-color: $White;
+      padding: 1.5rem;
+      text-align: left;
+      font-family: "Poppins";
+    }
+    .button-post {
+      margin-top: 0.5rem;
+      display: flex;
+      justify-content: right;
+      .btn-post {
+        background-color: $RaisinBlack;
+        color: $White;
+        border: none;
+        border-radius: 20px;
+        height: 37px;
+        width: 110px;
+        cursor: pointer;
+        &:hover {
+          color: $Black;
+          background-color: $Fawn;
+        }
+      }
+
+      .image-upload {
+        align-self: center;
+        .posting-icon {
+          @include icon(30px, 1rem);
+          &:hover {
+            color: $Fawn;
+            cursor: pointer;
+          }
+        }
+        input {
+          display: none;
+        }
+      }
+
+      .video-upload {
+        align-self: center;
+        .posting-icon {
+          @include icon(30px, 1rem);
+          &:hover {
+            color: $Fawn;
+            cursor: pointer;
+          }
+        }
+        input {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .card-posted {
+    @include card(auto, 500px);
+    padding: 1rem;
+    .posted-title {
+      display: flex;
+      .profile-pict {
+        width: 50px;
+        border-radius: 50%;
+        border: none;
+        margin-right: 1rem;
+      }
+      .posted-name-date {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+      }
+    }
+    .posted-content {
+      margin-top: 1rem;
+      text-align: left;
+      line-height: 100%;
+      hr {
+        color: $Black;
+        width: 100%;
+        margin-top: 1rem;
+      }
+      .like-comment-share {
+        display: flex;
+        align-content: center;
+        justify-content: space-around;
+        margin: 1rem 0 1rem 0;
+        .like-btn {
+          display: flex;
+          align-content: center;
+          .text-14-bold {
+            align-self: center;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .comment-btn {
+          display: flex;
+          align-content: center;
+          .text-14-bold {
+            align-self: center;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .share-btn {
+          display: flex;
+          align-content: center;
+          .text-14-bold {
+            align-self: center;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .icon-20 {
+          font-size: 20px;
+          margin-right: 0.3rem;
+        }
+      }
+      .comment-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        .text-11 {
+          color: $Gray;
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+      }
+      .comment-bubble {
+        border: 1px solid $SilverSand;
+        border-radius: 20px;
+        background-color: $White;
+        height: auto;
+        padding: 0.5rem;
+        .comment-title {
+          display: flex;
+          margin-bottom: 0.5rem;
+          .comment-profile-pict {
+            width: 35px;
+            border-radius: 50%;
+            border: none;
+            margin-right: 1rem;
+          }
+          .comment-name-date {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+          }
+        }
+        .comment-content {
+          padding-left: 3rem;
+        }
+        .like-reply-share {
+          display: flex;
+          justify-content: flex-start;
+          margin: 1rem 0 0.5rem 3rem;
+          .text-10-bold {
+            align-self: center;
+            margin-right: 1rem;
+            &:hover {
+              cursor: pointer;
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      .add-comment {
+        border: 1px solid $SilverSand;
+        border-radius: 20px;
+        background-color: $White;
+        height: auto;
+        margin-top: 1rem;
+        padding: 0.5rem;
+        display: flex;
+        .reply-profile-pict {
+          width: 35px;
+          border-radius: 50%;
+          border: none;
+          margin-right: 1rem;
+        }
+        .comment-input {
+          font-size: 12px;
+          align-self: center;
+          color: $Black;
+          font-family: "Poppins";
+          border: none;
+          width: 75%;
+          height: 21px;
+          &:focus {
+            outline: none;
+          }
+        }
+        .image-comment {
+          align-self: center;
+          .comment-icon {
+            @include icon(30px);
+            &:hover {
+              color: $Fawn;
+              cursor: pointer;
+            }
+          }
+          input {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

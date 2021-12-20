@@ -1,0 +1,40 @@
+.navbar {
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  .logo {
+    width: 40px;
+  }
+  .app-name {
+    font-size: 1.7rem;
+    margin: 0 3rem;
+  }
+
+  .search-input {
+    height: 1.5rem;
+    border-radius: 2rem;
+    border: none;
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    margin: 0 3rem;
+    width: 15rem;
+    font-family: "Poppins";
+    &:focus {
+      outline: none;
+    }
+  }
+  .navlink-wrapper {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    .navlink {
+      .icon-link {
+        @include icon(30px, 1.5rem, 1.5rem, 1.5rem, 1.5rem);
+        &:hover {
+          color: $White;
+        }
+      }
+    }
+  }
+}

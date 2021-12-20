@@ -19,5 +19,6 @@ router.delete(
   verifyToken,
   profileController.destroyProfilePicture
 );
+router.get("/profile/:id", verifyToken, profileController.indexById);
 
 module.exports = router;

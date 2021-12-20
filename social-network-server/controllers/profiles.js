@@ -53,6 +53,7 @@ const update = async (req, res, next) => {
       return res.json({
         error: 1,
         message: err.message,
+        fields: err.errors,
       });
     }
     next(err);
@@ -143,7 +144,7 @@ const destroyProfilePicture = async (req, res, next) => {
       message: "Delete profile picture success",
       data: profile,
     });
-  } catch {
+  } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
         error: 1,
@@ -155,4 +156,33 @@ const destroyProfilePicture = async (req, res, next) => {
   }
 };
 
-module.exports = { index, update, updateProfilePicture, destroyProfilePicture };
+const indexById = async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findById({ _id: id });
+    if (!user) {
+      return res.json({
+        error: 1,
+        message: "User not found!",
+      });
+    }
+    return res.json(user);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
+module.exports = {
+  index,
+  update,
+  updateProfilePicture,
+  destroyProfilePicture,
+  indexById,
+};

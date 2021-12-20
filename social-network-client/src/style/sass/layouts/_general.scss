@@ -1,0 +1,38 @@
+$SilverSand: #c4c4c4;
+$Gray: #7e7e7e;
+$Black: #000;
+$White: #fff;
+$Salmon: #ffa98d;
+$RaisinBlack: #201e20;
+$Fawn: #e0a96d;
+
+$mobile: 480px;
+$tablet: 768px;
+$dekstop: 1024px;
+$pc: 1280px;
+
+a {
+  color: $Black;
+}
+
+@mixin icon($s: 16px, $mr: 0px, $ml: 0px, $mt: 0px, $mb: 0px) {
+  font-size: $s;
+  margin-right: $mr;
+  margin-left: $ml;
+  margin-top: $mt;
+  margin-bottom: $mt;
+}
+
+@mixin text($s: 12px, $fw: 400) {
+  font-size: $s;
+  font-weight: $fw;
+}
+
+@mixin card($h: auto, $w: auto) {
+  background-color: $White;
+  border: none;
+  height: $h;
+  width: $w;
+  border-radius: 20px;
+  margin: 0.3rem 0.3rem 0.6rem 0.3rem;
+}

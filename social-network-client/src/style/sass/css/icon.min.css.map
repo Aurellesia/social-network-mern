@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,QAAQ,AAAC,CACP,KAAK,CAAE,IAAI,CACZ,AAED,AAAA,QAAQ,AAAC,CACP,KAAK,CAAE,IAAI,CACZ,AAED,AAAA,QAAQ,AAAC,CACP,KAAK,CAAE,IAAI,CACZ,AAED,AAAA,QAAQ,AAAC,CACP,KAAK,CAAE,IAAI,CACZ",
+    "sources": [
+        "../components/icon.scss"
+    ],
+    "names": [],
+    "file": "icon.min.css"
+}

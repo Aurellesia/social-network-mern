@@ -1,0 +1,33 @@
+.text-9 {
+  @include text(9px);
+}
+.text-10-bold {
+  @include text(10px, 700);
+}
+.text-11 {
+  @include text(11px);
+}
+.text-12 {
+  @include text();
+}
+.text-13-bold {
+  @include text(13px, 700);
+}
+.text-14 {
+  @include text(14px);
+}
+.text-14-bold {
+  @include text(14px, 700);
+}
+.text-18-bold {
+  @include text(18px, 700);
+}
+.text-20 {
+  @include text(20px);
+}
+.text-24-bold {
+  @include text(24px, 700);
+}
+.text-36-bold {
+  @include text(36px, 700);
+}

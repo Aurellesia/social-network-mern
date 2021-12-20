@@ -16,6 +16,7 @@ const register = async (req, res, next) => {
       return res.json({
         error: 1,
         message: err.message,
+        fields: err.errors,
       });
     }
     next(err);
@@ -52,7 +53,7 @@ const login = async (req, res, next) => {
       await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
       res.json({
         message: "Login Success",
-        data: user,
+        user,
         token: signed,
       });
     } catch (err) {

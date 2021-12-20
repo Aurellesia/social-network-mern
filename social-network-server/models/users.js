@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 const bcrypt = require("bcrypt");
-// const Profile = require("./profiles");
 
 let userSchema = new Schema(
   {
@@ -26,6 +25,7 @@ let userSchema = new Schema(
       type: String,
       required: [true, "Password cannot be empty"],
       maxlength: [100, "Maximum password length is 100 characters"],
+      minLength: [8, "Minimum last name length is 8 characters"],
     },
     role: {
       type: String,

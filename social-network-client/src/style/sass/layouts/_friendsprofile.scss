@@ -1,0 +1,15 @@
+.follow-btn {
+  background-color: $RaisinBlack;
+  border: none;
+  border-radius: 30px;
+  padding: 0.5rem 1rem;
+  color: $White;
+  width: fit-content;
+  align-self: center;
+  margin-top: 1rem;
+  &:hover {
+    color: $Black;
+    cursor: pointer;
+    background-color: $Fawn;
+  }
+}
