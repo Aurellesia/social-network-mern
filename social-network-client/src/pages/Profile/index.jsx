@@ -1,4 +1,5 @@
 import "../../style/sass/styles.scss";
+import React from "react";
 import Navbar from "../../components/Navbar";
 import FaGraduationCap from "@meronex/icons/fa/FaGraduationCap";
 import MdWork from "@meronex/icons/md/MdWork";
@@ -33,19 +34,27 @@ import {
   failFetchFollowers,
   successFetchFollowers,
 } from "../../redux/actions/profile";
-
 import { fetchFollowers } from "../../api/profile";
+import { createPosts } from "../../api/posts";
+import { failCreatePosts, successCreatePosts } from "../../redux/actions/posts";
+import { useNavigate } from "react-router";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const userProfile = useSelector((state) => state.profile);
+  const posts = useSelector((state) => state.posts);
   const [modal, setModal] = useState(false);
   const [followers, setFollowers] = useState(false);
   const showModal = modal ? "show-modal" : "hide-modal";
 
+  const [text, setText] = useState("");
+  const [image, setImage] = useState("");
+
   let userId = localStorage.getItem("user_id")
     ? localStorage.getItem("user_id")
     : {};
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile()
@@ -62,13 +71,45 @@ const Profile = () => {
     setModal(true);
     await fetchFollowers(userProfile.user._id)
       .then((res) => dispatch(successFetchFollowers(res)))
-      .catch((err) => failFetchFollowers(err));
+      .catch((err) => dispatch(failFetchFollowers(err)));
   };
 
   const handleFollowing = () => {
     setFollowers(false);
     setModal(true);
   };
+
+  const handleSubmit = async (e) => {
+    const postsData = new FormData();
+    postsData.append("text", text);
+    if (image.length < 0) {
+      image.forEach((item) => postsData.append("files", item));
+    }
+    e.preventDefault();
+    await createPosts(postsData)
+      .then((res) => dispatch(successCreatePosts(res)))
+      .then((_) => navigate("/profile"))
+      .catch((err) => dispatch(failCreatePosts(err)));
+  };
+
+  function showPreview(e) {
+    const imagePreview = [...e.target.files];
+    if (imagePreview.length > 0) {
+      imagePreview.map((item) => {
+        let src = URL.createObjectURL(item);
+        const preview = document.getElementById("preview");
+        preview.src = src;
+        preview.style.display = "flex";
+        return preview;
+      });
+    }
+  }
+  const resetFile = () => {
+    setImage("");
+    const preview = document.getElementById("preview");
+    preview.style.display = "none";
+  };
+
   return (
     <>
       {!userProfile.user ? (
@@ -286,45 +327,69 @@ const Profile = () => {
 
             <div>
               <div className="card-posting">
-                <form action="#" id="form-post">
+                <form action="#" id="form-post" onSubmit={handleSubmit}>
                   <textarea
-                    className="create-post"
-                    name="create-post"
-                    id=""
+                    className={`create-post `}
+                    name="text"
+                    id="text"
                     rows="5"
                     cols="38"
                     placeholder="Create your new post"
+                    onChange={(e) => setText(e.target.value)}
+                    value={text}
                   />
+                  <div>
+                    <span className="error">
+                      {!text && posts.posts.error && "Text cannot be empty"}
+                    </span>
+                  </div>
+                  <div className="button-post">
+                    <div id="preview" className="preview">
+                      <span className="text-12-bold">
+                        {image && `${image.length}`} Files
+                        <span
+                          onClick={(_) => {
+                            resetFile();
+                          }}
+                        >
+                          &times;
+                        </span>
+                      </span>
+                    </div>
+                    <div className="image-upload">
+                      <label htmlFor="images">
+                        <MdPhotoSizeSelectActual className="posting-icon" />
+                      </label>
+                      <input
+                        id="images"
+                        name="images"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        onChange={(e) => {
+                          setImage([...e.target.files]);
+                          showPreview(e);
+                        }}
+                      />
+                    </div>
+
+                    <div className="video-upload">
+                      <label htmlFor="video-input">
+                        <BsCameraVideoFill className="posting-icon" />
+                      </label>
+                      <input
+                        id="video-input"
+                        type="file"
+                        multiple
+                        accept="video/*"
+                      />
+                    </div>
+
+                    <button className="btn-post" type="submit" form="form-post">
+                      <span className="text-14">Add Post</span>
+                    </button>
+                  </div>
                 </form>
-                <div className="button-post">
-                  <div className="image-upload">
-                    <label htmlFor="image-input">
-                      <MdPhotoSizeSelectActual className="posting-icon" />
-                    </label>
-                    <input
-                      id="image-input"
-                      type="file"
-                      multiple
-                      accept="image/*"
-                    />
-                  </div>
-
-                  <div className="video-upload">
-                    <label htmlFor="video-input">
-                      <BsCameraVideoFill className="posting-icon" />
-                    </label>
-                    <input
-                      id="video-input"
-                      type="file"
-                      multiple
-                      accept="video/*"
-                    />
-                  </div>
-
-                  <button className="btn-post" type="submit" form="form-post">
-                    <span className="text-14">Add Post</span>
-                  </button>
-                </div>
               </div>
               <div className="card-posted">
                 <div className="posted-title">

@@ -80,7 +80,7 @@
         .contact-me-icon {
           @include icon(40px, 0.5rem);
           &:hover {
-            color: $Fawn;
+            color: $Blue;
           }
         }
       }
@@ -123,12 +123,30 @@
       text-align: left;
       font-family: "Poppins";
     }
+    .preview {
+      border: 1px solid $SilverSand;
+      border-radius: 20px;
+      flex-direction: row;
+      justify-content: center;
+      padding: 0 1rem;
+      display: none;
+      margin-right: 11rem;
+      .text-12-bold {
+        align-self: center;
+        span {
+          margin-left: 1rem;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
     .button-post {
       margin-top: 0.5rem;
       display: flex;
       justify-content: right;
       .btn-post {
-        background-color: $RaisinBlack;
+        background-color: $Blue;
         color: $White;
         border: none;
         border-radius: 20px;
@@ -136,8 +154,8 @@
         width: 110px;
         cursor: pointer;
         &:hover {
-          color: $Black;
-          background-color: $Fawn;
+          color: $White;
+          background-color: $SilverSand;
         }
       }
 
@@ -146,7 +164,7 @@
         .posting-icon {
           @include icon(30px, 1rem);
           &:hover {
-            color: $Fawn;
+            color: $Blue;
             cursor: pointer;
           }
         }
@@ -160,7 +178,7 @@
         .posting-icon {
           @include icon(30px, 1rem);
           &:hover {
-            color: $Fawn;
+            color: $Blue;
             cursor: pointer;
           }
         }
@@ -318,7 +336,7 @@
           .comment-icon {
             @include icon(30px);
             &:hover {
-              color: $Fawn;
+              color: $Blue;
               cursor: pointer;
             }
           }

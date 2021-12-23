@@ -42,6 +42,16 @@
       }
     }
   }
+  .modal-file {
+    top: 15%;
+    left: 33%;
+    width: 25rem;
+    height: 28rem;
+    background-color: $White;
+    border-radius: 20px;
+    position: absolute;
+    border: 1px solid $RaisinBlack;
+  }
 }
 .show-modal {
   display: block;

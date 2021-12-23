@@ -39,7 +39,7 @@
       display: flex;
       justify-content: right;
       .btn-post {
-        background-color: $RaisinBlack;
+        background-color: $Blue;
         color: $White;
         border: none;
         border-radius: 20px;
@@ -47,8 +47,8 @@
         width: 110px;
         cursor: pointer;
         &:hover {
-          color: $Black;
-          background-color: $Fawn;
+          color: $White;
+          background-color: $SilverSand;
         }
       }
 

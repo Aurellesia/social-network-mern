@@ -23,12 +23,12 @@ const store = async (req, res, next) => {
     let { text } = req.body;
 
     if (req.files) {
+      console.log(req.files);
       let url = ``;
       let uploadedFiles = req.files;
 
       uploadedFiles.forEach((item) => {
         let tmp_path = getPath(item);
-
         if (ALLOWED_IMAGE_EXT.includes(getExt(item))) {
           url = `public/images/posts/`;
         } else {

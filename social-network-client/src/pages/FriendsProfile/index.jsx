@@ -1,6 +1,6 @@
 import "../../style/sass/styles.scss";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, connect, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
 import { fetchFriendProfile, follow } from "../../api/profile";
@@ -9,8 +9,12 @@ import BounceLoader from "react-spinners/BounceLoader";
 import {
   failFetchFriendProfile,
   failFollow,
+  successFetchFollowers,
   successFetchFriendProfile,
   successFollow,
+  failFetchFollowers,
+  successFetchFollowing,
+  failFetchFollowing,
 } from "../../redux/actions/profile";
 import FaGraduationCap from "@meronex/icons/fa/FaGraduationCap";
 import MdWork from "@meronex/icons/md/MdWork";
@@ -30,17 +34,24 @@ import MdInsertEmoticon from "@meronex/icons/md/MdInsertEmoticon";
 import empty from "../../assets/icons/empty.png";
 import { config } from "../../config";
 import { useNavigate } from "react-router";
+import { fetchFollowers, fetchFollowing } from "../../api/profile";
 
 const FriendsProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const friendProfile = useSelector((state) => state.profile);
   const navigate = useNavigate();
+  const [modal, setModal] = useState(false);
+  const [followers, setFollowers] = useState(false);
+  const showModal = modal ? "show-modal" : "hide-modal";
 
   useEffect(() => {
     fetchFriendProfile(id)
       .then((res) => dispatch(successFetchFriendProfile(res)))
       .catch((err) => dispatch(failFetchFriendProfile(err)));
+    fetchFollowing(id)
+      .then((res) => dispatch(successFetchFollowing(res)))
+      .then((err) => dispatch(failFetchFollowing(err)));
   }, [dispatch, id]);
 
   let userId = localStorage.getItem("user_id")
@@ -57,15 +68,61 @@ const FriendsProfile = () => {
     }
   };
 
+  const handleFollowers = async () => {
+    setFollowers(true);
+    setModal(true);
+    await fetchFollowers(id)
+      .then((res) => dispatch(successFetchFollowers(res)))
+      .catch((err) => dispatch(failFetchFollowers(err)));
+  };
+
+  const handleFollowing = () => {
+    setFollowers(false);
+    setModal(true);
+  };
   return (
     <>
-      <Navbar />
       {id === userId ? (
         navigate("/profile")
       ) : !friendProfile.user.data ? (
         <BounceLoader color="#201e20" />
       ) : (
         <>
+          <div className={`modal-container ${showModal} `}>
+            <div className={`modal `}>
+              <div className="cancel-modal">
+                <span onClick={(_) => setModal(false)}>&times;</span>
+              </div>
+
+              <br />
+              {followers ? (
+                !friendProfile.followers.data ? (
+                  <BounceLoader color="#201e20" />
+                ) : (
+                  friendProfile.followers.data.map((item, index) => {
+                    return (
+                      <Link key={index} to={`/profile/${item._id}`}>
+                        <span>
+                          {item.first_name} {item.last_name}
+                        </span>
+                      </Link>
+                    );
+                  })
+                )
+              ) : !friendProfile.following.data ? (
+                <BounceLoader color="#201e20" />
+              ) : (
+                friendProfile.following.data.map((item, index) => {
+                  return (
+                    <Link key={index} to={`/profile/${item._id}`}>
+                      <span>{item.first_name}</span>
+                    </Link>
+                  );
+                })
+              )}
+            </div>
+          </div>
+          <Navbar />
           <div className="profile">
             <img
               src={
@@ -80,17 +137,15 @@ const FriendsProfile = () => {
               {friendProfile.user.data.first_name}{" "}
               {friendProfile.user.data.last_name}
             </span>
-
+            <span className="text-20">{friendProfile.user.data.job}</span>
+            <span className="text-12">
+              {friendProfile.user.data.current_city}
+            </span>
             <button className="follow-btn" onClick={handleFollowBtn}>
               {friendProfile.user.data.followers.includes(userId)
                 ? "Unfollow"
                 : "Follow"}
             </button>
-
-            <span className="text-20">{friendProfile.user.data.job}</span>
-            <span className="text-12">
-              {friendProfile.user.data.current_city}
-            </span>
           </div>
           <div className="container">
             <div>
@@ -100,16 +155,35 @@ const FriendsProfile = () => {
                   <span className="text-14">Posts</span>
                 </div>
                 <div className="followers-content">
-                  <span className="text-24-bold">200</span>
-                  <Link to={`/followers/${friendProfile.user.data._id}`}>
-                    <span className="text-14">Followers</span>
-                  </Link>
+                  {!friendProfile.user.data.followers ? (
+                    <BounceLoader color="#201e20" />
+                  ) : (
+                    <span className="text-24-bold">
+                      {friendProfile.user.data.followers.length}
+                    </span>
+                  )}
+                  <span className="text-14" onClick={handleFollowers}>
+                    Followers
+                  </span>
                 </div>
                 <div className="followers-content">
-                  <span className="text-24-bold">200</span>
-                  <Link to={`/following/${friendProfile.user.data._id}`}>
+                  <span className="text-24-bold">
+                    {!friendProfile.following.data ? (
+                      <BounceLoader color="#201e20" />
+                    ) : (
+                      <span className="text-24-bold">
+                        {friendProfile.following.data.length}
+                      </span>
+                    )}
+                  </span>
+
+                  <span className="text-14" onClick={handleFollowing}>
+                    Following
+                  </span>
+
+                  {/* <Link to={`/following/${friendProfile.user.data._id}`}>
                     <span className="text-14">Following</span>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
               <div className="card-about-me">

@@ -5,6 +5,7 @@ $White: #fff;
 $Salmon: #ffa98d;
 $RaisinBlack: #201e20;
 $Fawn: #e0a96d;
+$Blue: #429fc9;
 
 $mobile: 480px;
 $tablet: 768px;
@@ -30,7 +31,7 @@ a {
 
 @mixin card($h: auto, $w: auto) {
   background-color: $White;
-  border: none;
+  border: 1px solid $SilverSand;
   height: $h;
   width: $w;
   border-radius: 20px;

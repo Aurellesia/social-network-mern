@@ -192,7 +192,7 @@ const Setting = () => {
                 cols="30"
                 rows="7"
                 placeholder="Write about you"
-                onChange={(e) => console.log(e.target.value)}
+                onChange={(e) => setValue("bio", e.target.value)}
                 {...register("bio")}
               />
               <span className="text-24-bold">Social Media</span>
