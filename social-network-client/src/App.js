@@ -28,6 +28,7 @@ function App() {
             <Route path="/followers/:id" element={<Followers />} />
             <Route path="/following/:id" element={<Following />} />
             <Route path="/profile/:id" element={<FriendsProfile />} />
+            {/* <Route path="/posts/edit/:id" element={<Profile />} /> */}
           </Routes>
         </Router>
       </div>
