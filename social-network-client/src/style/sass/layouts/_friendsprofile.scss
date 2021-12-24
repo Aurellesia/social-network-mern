@@ -1,15 +1,5 @@
 .follow-btn {
-  background-color: $Blue;
-  border: none;
-  border-radius: 30px;
-  padding: 0.5rem 1rem;
-  color: $White;
+  @include button();
   width: fit-content;
-  align-self: center;
   margin-top: 1rem;
-  &:hover {
-    color: $White;
-    cursor: pointer;
-    background-color: $SilverSand;
-  }
 }

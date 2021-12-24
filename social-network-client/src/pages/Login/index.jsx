@@ -45,16 +45,16 @@ const SignIn = () => {
   };
   return (
     <>
-      <div className="signin-container">
-        <div className="signin-card">
-          <div className="signin-appname">
-            <img className="signin-logo" src={logo} alt="signin-logo" />
+      <div className="sign-container">
+        <div className="sign-card">
+          <div className="sign-appname">
+            <img className="sign-logo" src={logo} alt="sign-logo" />
             <span className="text-36-bold">eht</span>
           </div>
           <span className="text-24">LOGIN</span>
           <form action="#" id="signin-form" onSubmit={handleSubmit(onSubmit)}>
             <input
-              className="signin-input"
+              className="sign-input"
               type="text"
               placeholder="Email"
               name="email"
@@ -64,7 +64,7 @@ const SignIn = () => {
               <span className="error">{errors.email?.message}</span>
             </div>
             <input
-              className="signin-input"
+              className="sign-input"
               type="password"
               placeholder="Password"
               name="password"
@@ -74,7 +74,7 @@ const SignIn = () => {
               <span className="error">{errors.password?.message}</span>
             </div>
             <button
-              className="signin-btn"
+              className="sign-btn"
               type="submit"
               disabled={status === statusList.process}
             >

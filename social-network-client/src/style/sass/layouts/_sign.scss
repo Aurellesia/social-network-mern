@@ -1,0 +1,34 @@
+.error {
+  color: red;
+  font-size: 12px;
+}
+.sign-container {
+  @include flex($direc: column);
+  height: 100vh;
+  .sign-card {
+    @include card(28rem, 22rem);
+    @include flex($direc: column, $ta: center);
+    .sign-appname {
+      .sign-logo {
+        width: 80px;
+        margin-right: -2rem;
+      }
+    }
+    .sign-input {
+      @include input(70%);
+      margin: 0.5rem 0;
+    }
+    .sign-btn {
+      @include button();
+      width: 70%;
+      margin: 0.5rem 0;
+    }
+  }
+  .text-14 {
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

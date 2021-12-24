@@ -2,18 +2,28 @@ $SilverSand: #c4c4c4;
 $Gray: #7e7e7e;
 $Black: #000;
 $White: #fff;
-$Salmon: #ffa98d;
 $RaisinBlack: #201e20;
-$Fawn: #e0a96d;
 $Blue: #429fc9;
+$AzureishWhite: #dcebf5;
 
 $mobile: 480px;
 $tablet: 768px;
 $dekstop: 1024px;
 $pc: 1280px;
 
+* {
+  font-family: "Poppins";
+}
 a {
   color: $Black;
+  text-decoration: none;
+}
+
+hr {
+  color: $Black;
+  width: 100%;
+  margin-top: 1rem;
+  height: 0;
 }
 
 @mixin icon($s: 16px, $mr: 0px, $ml: 0px, $mt: 0px, $mb: 0px) {
@@ -22,6 +32,10 @@ a {
   margin-left: $ml;
   margin-top: $mt;
   margin-bottom: $mt;
+  &:hover {
+    color: $Blue;
+    cursor: pointer;
+  }
 }
 
 @mixin text($s: 12px, $fw: 400) {
@@ -29,11 +43,68 @@ a {
   font-weight: $fw;
 }
 
-@mixin card($h: auto, $w: auto) {
+@mixin card($h: auto, $w: auto, $p: 0) {
   background-color: $White;
   border: 1px solid $SilverSand;
   height: $h;
   width: $w;
   border-radius: 20px;
   margin: 0.3rem 0.3rem 0.6rem 0.3rem;
+  padding: $p;
+}
+
+@mixin flex($align: center, $justify: center, $direc: row, $ta: left) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direc;
+  text-align: $ta;
+}
+
+@mixin picture($size, $br) {
+  width: $size;
+  height: $size;
+  border-radius: $br;
+  align-self: center;
+  object-fit: cover;
+}
+
+@mixin box() {
+  border: 1px solid $SilverSand;
+  border-radius: 20px;
+  background-color: $White;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+@mixin button() {
+  background-color: $Blue;
+  color: $White;
+  border: none;
+  border-radius: 20px;
+  padding: 0.5rem 1.5rem;
+  align-self: center;
+  cursor: pointer;
+  &:hover {
+    color: $Black;
+    background-color: $SilverSand;
+  }
+}
+
+button {
+  @include button();
+}
+
+@mixin grid() {
+  display: grid;
+  justify-content: center;
+  grid-gap: 1rem;
+}
+
+@mixin input($w: 0rem) {
+  border: 1px solid $SilverSand;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  width: $w;
+  align-self: center;
 }

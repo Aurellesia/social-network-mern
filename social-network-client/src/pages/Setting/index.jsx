@@ -1,6 +1,5 @@
 import Navbar from "../../components/Navbar";
 import "../../style/sass/styles.scss";
-import empty from "../../assets/icons/empty.png";
 import { useDispatch, connect } from "react-redux";
 import {
   deleteProfilePict,
@@ -22,7 +21,7 @@ import {
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { config } from "../../config";
+import CardChangePict from "../../components/CardChangePict";
 
 const Setting = () => {
   const dispatch = useDispatch();
@@ -97,44 +96,12 @@ const Setting = () => {
     <>
       <Navbar />
       <div className="setting-container">
-        <div className="card-change-pass-pict">
-          <span className="text-24-bold">Change Profile Pict</span>
-          <hr />
-          <form id="change-pict" onSubmit={handleSubmit(onSubmitPict)}>
-            <img
-              src={
-                image !== ""
-                  ? `${config.api_host}/images/profiles/${image}`
-                  : empty
-              }
-              alt="profile-pict"
-              className="profile-pict"
-            />
-            <input
-              type="file"
-              name="profile_pict"
-              id="profile_pict"
-              accept="image/*"
-              onInput={(e) => setImage(e.target.files[0])}
-            />
-            <button type="submit" form="change-pict">
-              Save Photo
-            </button>
-          </form>
-          <div className="delete-btn">
-            <button type="submit" onClick={handleDeletePict}>
-              Delete Photo
-            </button>
-          </div>
-
-          <span className="text-24-bold">Change Password</span>
-          <hr />
-          <form action="#" id="change_pass">
-            <label htmlFor="change_pass">New Password</label>
-            <input type="password" id="change_pass_input" name="change_pass" />
-            <button type="submit">Save</button>
-          </form>
-        </div>
+        <CardChangePict
+          onSubmit={onSubmitPict}
+          dataImage={image}
+          setImage={setImage}
+          handleDelete={handleDeletePict}
+        />
 
         <div className="card-setting">
           <span className="text-24-bold">Profile</span>
@@ -145,7 +112,9 @@ const Setting = () => {
               id="edit-profile"
               onSubmit={handleSubmit(onSubmit)}
             >
-              <label htmlFor="first_name">First Name</label>
+              <label className="text-14-bold" htmlFor="first_name">
+                First Name
+              </label>
               <input
                 type="text"
                 id="first_name"
@@ -153,7 +122,9 @@ const Setting = () => {
                 onChange={(e) => setValue("first_name", e.target.value)}
                 {...register("first_name")}
               />
-              <label htmlFor="last_name">Last Name</label>
+              <label className="text-14-bold" htmlFor="last_name">
+                Last Name
+              </label>
               <input
                 type="text"
                 id="last_name"
@@ -161,7 +132,9 @@ const Setting = () => {
                 onChange={(e) => setValue("last_name", e.target.value)}
                 {...register("last_name")}
               />
-              <label htmlFor="job">Job</label>
+              <label className="text-14-bold" htmlFor="job">
+                Job
+              </label>
               <input
                 type="text"
                 id="job"
@@ -169,7 +142,9 @@ const Setting = () => {
                 onChange={(e) => setValue("job", e.target.value)}
                 {...register("job")}
               />
-              <label htmlFor="current_city">Current City</label>
+              <label className="text-14-bold" htmlFor="current_city">
+                Current City
+              </label>
               <input
                 type="text"
                 id="current_city"
@@ -177,7 +152,9 @@ const Setting = () => {
                 onChange={(e) => setValue("current_city", e.target.value)}
                 {...register("current_city")}
               />
-              <label htmlFor="education">Education</label>
+              <label className="text-14-bold" htmlFor="education">
+                Education
+              </label>
               <input
                 type="text"
                 id="education"
@@ -185,7 +162,9 @@ const Setting = () => {
                 onChange={(e) => setValue("education", e.target.value)}
                 {...register("education")}
               />
-              <label htmlFor="bio">Bio</label>
+              <label className="text-14-bold" htmlFor="bio">
+                Bio
+              </label>
               <textarea
                 name="bio"
                 id="bio"
@@ -195,9 +174,9 @@ const Setting = () => {
                 onChange={(e) => setValue("bio", e.target.value)}
                 {...register("bio")}
               />
-              <span className="text-24-bold">Social Media</span>
-              <hr />
-              <label htmlFor="linkedin">Linkedin</label>
+              <label className="text-14-bold" htmlFor="linkedin">
+                Linkedin
+              </label>
               <input
                 type="text"
                 id="linkedin"
@@ -206,7 +185,9 @@ const Setting = () => {
                 onChange={(e) => setValue("linkedin", e.target.value)}
                 {...register("linkedin")}
               />
-              <label htmlFor="twitter">Twitter</label>
+              <label className="text-14-bold" htmlFor="twitter">
+                Twitter
+              </label>
               <input
                 type="text"
                 id="twitter"
@@ -215,7 +196,9 @@ const Setting = () => {
                 onChange={(e) => setValue("twitter", e.target.value)}
                 {...register("twitter")}
               />
-              <label htmlFor="instagram">Instagram</label>
+              <label className="text-14-bold" htmlFor="instagram">
+                Instagram
+              </label>
               <input
                 type="text"
                 id="instagram"
@@ -224,7 +207,9 @@ const Setting = () => {
                 onChange={(e) => setValue("instagram", e.target.value)}
                 {...register("instagram")}
               />
-              <label htmlFor="business_email">Business Email</label>
+              <label className="text-14-bold" htmlFor="business_email">
+                Business Email
+              </label>
               <input
                 type="text"
                 id="business_email"
@@ -233,7 +218,9 @@ const Setting = () => {
                 onChange={(e) => setValue("business_email", e.target.value)}
                 {...register("business_email")}
               />
-              <label htmlFor="telegram">Telegram</label>
+              <label className="text-14-bold" htmlFor="telegram">
+                Telegram
+              </label>
               <input
                 type="text"
                 id="telegram"

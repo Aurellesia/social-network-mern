@@ -2,14 +2,13 @@
   display: flex;
   padding-left: 25rem;
   .search-box {
+    @include flex($direc: column, $ta: center);
     width: 16.9rem;
     height: 20rem;
     background-color: $White;
-    margin-top: -1.6rem;
+    margin-top: 3rem;
     border-radius: 20px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
+    position: fixed;
   }
   .show-search-box {
     display: block;
@@ -41,16 +40,6 @@
         cursor: pointer;
       }
     }
-  }
-  .modal-file {
-    top: 15%;
-    left: 33%;
-    width: 25rem;
-    height: 28rem;
-    background-color: $White;
-    border-radius: 20px;
-    position: absolute;
-    border: 1px solid $RaisinBlack;
   }
 }
 .show-modal {

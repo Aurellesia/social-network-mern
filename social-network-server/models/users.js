@@ -25,7 +25,7 @@ let userSchema = new Schema(
       type: String,
       required: [true, "Password cannot be empty"],
       maxlength: [100, "Maximum password length is 100 characters"],
-      minLength: [8, "Minimum last name length is 8 characters"],
+      minLength: [8, "Minimum password length is 8 characters"],
     },
     role: {
       type: String,

@@ -88,7 +88,7 @@ const store = async (req, res, next) => {
 const index = async (req, res, next) => {
   try {
     const user = req.user;
-    let post = await Post.find({ user: user._id });
+    let post = await Post.find({ user: user._id }).sort({ createdAt: "desc" });
     if (!post) {
       return res.json({
         error: 1,

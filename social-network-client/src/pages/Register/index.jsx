@@ -1,10 +1,10 @@
 import "../../style/sass/styles.scss";
-import logo from "../../assets/icons/logo_g.png";
-import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { userRegister } from "../../api/auth";
+import logo from "../../assets/icons/logo_g.png";
+import { NavLink } from "react-router-dom";
 
 const statusList = {
   idle: "idle",
@@ -40,16 +40,16 @@ const Register = () => {
   };
   return (
     <>
-      <div className="signup-container">
-        <div className="signup-card">
-          <div className="signup-appname">
-            <img className="signup-logo" src={logo} alt="signup-logo" />
+      <div className="sign-container">
+        <div className="sign-card">
+          <div className="sign-appname">
+            <img className="sign-logo" src={logo} alt="sign-logo" />
             <span className="text-36-bold">eht</span>
           </div>
           <span className="text-24">REGISTER</span>
           <form onSubmit={handleSubmit(onSubmit)} id="signup-form">
             <input
-              className="signup-input"
+              className="sign-input"
               type="text"
               placeholder="First Name"
               name="first_name"
@@ -59,7 +59,7 @@ const Register = () => {
               <span className="error">{errors.first_name?.message}</span>
             </div>
             <input
-              className="signup-input"
+              className="sign-input"
               type="text"
               placeholder="Last Name"
               name="last_name"
@@ -69,7 +69,7 @@ const Register = () => {
               <span className="error">{errors.last_name?.message}</span>
             </div>
             <input
-              className="signup-input"
+              className="sign-input"
               type="text"
               placeholder="Email"
               name="email"
@@ -79,7 +79,7 @@ const Register = () => {
               <span className="error">{errors.email?.message}</span>
             </div>
             <input
-              className="signup-input"
+              className="sign-input"
               type="password"
               placeholder="Password"
               name="password"
@@ -89,7 +89,7 @@ const Register = () => {
               <span className="error">{errors.password?.message}</span>
             </div>
             <button
-              className="signup-btn"
+              className="sign-btn"
               type="submit"
               disabled={status === statusList.process}
             >

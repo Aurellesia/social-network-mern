@@ -11,3 +11,14 @@ export const createPosts = async (data) => {
     },
   });
 };
+
+export const readPosts = async () => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+  return await axios.get(`${config.api_host}/api/posts`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

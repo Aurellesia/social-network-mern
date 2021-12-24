@@ -1,83 +1,51 @@
-.card-post-tl {
-  @include card(auto, auto);
-  padding: 1rem;
-  .post-tl-title {
-    display: flex;
-    .profile-pict-tl {
-      width: 50px;
-      border-radius: 50%;
-      border: none;
-      margin-right: 1rem;
-    }
-    .posted-name-tl {
-      display: flex;
-      flex-direction: column;
-      text-align: left;
-      justify-content: center;
-    }
-  }
-  hr {
-    width: 100%;
-    color: $SilverSand;
-    margin: 1rem 0;
-  }
-  .post-tl-content {
-    margin-top: 1rem;
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    .create-post-tl {
-      width: 90%;
-      padding: 1rem;
-      height: 5rem;
-      font-family: "Poppins";
-      border-radius: 20px;
-      border: 1px solid $SilverSand;
-    }
-    .button-post {
-      margin-top: 0.5rem;
-      display: flex;
-      justify-content: right;
-      .btn-post {
-        background-color: $Blue;
-        color: $White;
-        border: none;
-        border-radius: 20px;
-        height: 37px;
-        width: 110px;
-        cursor: pointer;
-        &:hover {
-          color: $White;
-          background-color: $SilverSand;
-        }
+.container-tl {
+  @include flex($align: none);
+  margin-top: 5rem;
+  .card-post-tl {
+    @include card(auto, auto, 1rem);
+    .post-tl-title {
+      @include flex($justify: left);
+      .profile-pict-tl {
+        @include picture(50px, 50%);
+        margin-right: 1rem;
       }
-
-      .image-upload {
-        align-self: center;
-        .posting-icon {
-          @include icon(30px, 1rem);
-          &:hover {
-            color: $Fawn;
-            cursor: pointer;
+      .posted-name-tl {
+        @include flex($direc: column, $align: left);
+      }
+    }
+    .post-tl-content {
+      @include flex($direc: column);
+      margin-top: 1rem;
+      .create-post-tl {
+        @include box();
+        padding: 1rem;
+        height: 5rem;
+      }
+      .button-post {
+        margin-top: 0.5rem;
+        display: flex;
+        .btn-post {
+          @include button();
+        }
+        .media-upload {
+          .posting-icon {
+            @include icon(30px, 1rem);
+          }
+          input {
+            display: none;
           }
         }
-        input {
-          display: none;
-        }
       }
-
-      .video-upload {
-        align-self: center;
-        .posting-icon {
-          @include icon(30px, 1rem);
-          &:hover {
-            color: $Fawn;
-            cursor: pointer;
-          }
-        }
-        input {
-          display: none;
-        }
+    }
+  }
+  .card-posted-tl {
+    .posted-header {
+      .profile-pict {
+        @include picture(3.1rem, 50%);
+        margin-right: 1rem;
+      }
+      .posted-name-date {
+        @include flex($align: left, $justify: left, $direc: column);
       }
     }
   }
