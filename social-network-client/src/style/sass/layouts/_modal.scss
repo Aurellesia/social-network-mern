@@ -27,7 +27,6 @@
   align-items: center;
   .modal,
   .modal-edit {
-    width: 25rem;
     height: 28rem;
     background-color: $White;
     border-radius: 20px;
@@ -37,6 +36,36 @@
       padding: 0.7rem 1rem;
       span {
         cursor: pointer;
+      }
+    }
+  }
+  .modal {
+    width: 25rem;
+  }
+  .modal-edit {
+    @include card(auto, 500px, 1rem);
+    .input-section {
+      @include flex($justify: right);
+      margin-top: 0.5rem;
+      .preview {
+        padding: 0 1rem;
+        display: none;
+        margin-right: 11rem;
+        .text-12-bold {
+          align-self: center;
+          span {
+            margin-left: 1rem;
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+      .posting-icon {
+        @include icon(30px, 1rem);
+      }
+      input {
+        display: none;
       }
     }
   }

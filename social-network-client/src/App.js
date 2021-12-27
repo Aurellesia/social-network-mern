@@ -23,12 +23,12 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
             <Route path="/" element={<Timeline />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile" exact element={<Profile />} />
             <Route path="/setting" element={<Setting />} />
             <Route path="/followers/:id" element={<Followers />} />
             <Route path="/following/:id" element={<Following />} />
             <Route path="/profile/:id" element={<FriendsProfile />} />
-            {/* <Route path="/posts/edit/:id" element={<Profile />} /> */}
+            <Route path="/profile/posts/:id" element={<Profile />} />
           </Routes>
         </Router>
       </div>

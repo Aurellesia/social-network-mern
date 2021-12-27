@@ -1,5 +1,6 @@
 const Post = require("../models/posts");
 const Comment = require("../models/comments");
+const { ObjectId } = require("mongodb");
 
 const store = async (req, res, next) => {
   try {
@@ -10,7 +11,7 @@ const store = async (req, res, next) => {
     await comment.save();
     const post = await Post.findOneAndUpdate(
       { _id: id },
-      { $push: { comments: comment._id } },
+      { $push: { comments: comment } },
       { new: true, runValidators: true }
     );
     if (!post) {
@@ -35,7 +36,7 @@ const store = async (req, res, next) => {
 const index = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const post = await Post.findOne({ _id: id });
+    const post = await Post.findById({ _id: id });
     if (!post) {
       return res.json({
         error: 1,
@@ -48,6 +49,29 @@ const index = async (req, res, next) => {
         return commentText;
       })
     );
+    return res.json(comment);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
+const view = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let comment = await Comment.findById({ _id: id });
+    if (!comment) {
+      return res.json({
+        error: 1,
+        message: `Comment not found!`,
+      });
+    }
     return res.json(comment);
   } catch (err) {
     if (err && err.name === "ValidationError") {
@@ -174,4 +198,4 @@ const like = async (req, res, next) => {
   }
 };
 
-module.exports = { store, index, update, destroy, like };
+module.exports = { store, index, update, destroy, like, view };

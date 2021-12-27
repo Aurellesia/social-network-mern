@@ -43,22 +43,13 @@ const CardPosted = ({ dataUser, dataPosted, handleEdit }) => {
             <span className="btn-more" onClick={handleClickMore}>
               <CgMoreVerticalAlt className="icon-20" />
               <div className={`modal-more ${showModalMore}`}>
-                {/* <Link
+                <Link
                   className="more-action"
-                  to={`posts/edit/${dataPosted._id}`}
+                  to={`posts/${dataPosted._id}`}
                   onClick={handleEdit}
                 >
                   <span className="text-14">Edit Post</span>
-                </Link> */}
-                <div
-                  className="more-action"
-                  onClick={() => {
-                    // handleEdit;
-                    console.log(dataPosted._id);
-                  }}
-                >
-                  <span className="text-14">Edit Post</span>
-                </div>
+                </Link>
                 <div className="more-action">
                   <span className="text-14">Delete Post</span>
                 </div>

@@ -6,11 +6,12 @@ const CardFollowers = ({
   dataFollowing,
   handleFollowers,
   handleFollowing,
+  dataPost,
 }) => {
   return (
     <div className="card-followers">
       <div className="followers-content">
-        <span className="text-24-bold">200</span>
+        <span className="text-24-bold">{dataPost.length}</span>
         <span className="text-14">Posts</span>
       </div>
       <div className="followers-content">

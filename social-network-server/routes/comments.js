@@ -6,6 +6,7 @@ const commentsController = require("../controllers/comments");
 
 router.post("/comments/:id", verifyToken, commentsController.store);
 router.get("/comments/:id", verifyToken, commentsController.index);
+router.get("/comments/view/:id", verifyToken, commentsController.view);
 
 router.put("/comments/:commentId", verifyToken, commentsController.update);
 router.delete("/comments/:commentId", verifyToken, commentsController.destroy);

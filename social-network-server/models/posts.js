@@ -14,7 +14,7 @@ let postSchema = new Schema(
     },
     videos: [String],
     images: [String],
-    comments: [Schema.Types.ObjectId],
+    comments: [Object],
     likes: [Schema.Types.ObjectId],
   },
   { timestamps: true }

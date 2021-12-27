@@ -108,6 +108,33 @@ const index = async (req, res, next) => {
   }
 };
 
+const view = async (req, res, next) => {
+  try {
+    const user = req.user;
+    const { id } = req.params;
+    let post = await Post.find({ _id: id, user: user._id }).populate({
+      path: "comments",
+      model: "Comment",
+    });
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: `Post not found!`,
+      });
+    }
+    return res.json(post);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
 const update = async (req, res, next) => {
   try {
     const user = req.user;
@@ -257,4 +284,4 @@ const destroy = async (req, res, next) => {
   }
 };
 
-module.exports = { store, index, destroy, update };
+module.exports = { store, index, destroy, update, view };

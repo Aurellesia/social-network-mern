@@ -41,6 +41,7 @@
 
 .container {
   @include flex($align: none);
+
   .card-followers {
     @include card(140px);
     .followers-content {
@@ -106,6 +107,7 @@
 
   .card-posting {
     @include card(auto, 500px, 1rem);
+
     .input-section {
       @include flex($justify: right);
       margin-top: 0.5rem;
@@ -131,6 +133,10 @@
       }
     }
   }
+}
+
+.post-box {
+  resize: none;
 }
 .card-posted {
   @include card(auto, 500px, 1rem);
@@ -167,6 +173,12 @@
     .action-section {
       @include flex($justify: space-around);
       margin: 1rem 0 1rem 0;
+      .liked-btn {
+        color: $Blue;
+      }
+      .unlike-btn {
+        color: $Black;
+      }
       .action-btn {
         .text-14-bold {
           align-self: center;
@@ -192,6 +204,7 @@
       }
     }
     .comment-box {
+      margin-top: 1rem;
       height: auto;
       padding: 0.5rem;
       .comment-header {
@@ -219,31 +232,37 @@
     .add-comment {
       padding: 0.5rem;
       display: flex;
+      flex-direction: row;
       margin-top: 1rem;
       .reply-profile-pict {
         @include picture(2.5rem, 50%);
         margin-right: 1rem;
       }
-      textarea {
+      .comment-input {
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        resize: none;
+        height: 1rem;
+        line-height: 20px;
         font-size: 12px;
-        align-self: center;
-        color: $Black;
+        margin-top: 0.5rem;
         border: none;
-        width: 75%;
-        height: 21px;
+        margin-right: 5rem;
+        &[contenteditable]:empty::before {
+          content: "Add your comment";
+          color: $Gray;
+        }
         &:focus {
           outline: none;
         }
       }
-      .comment-icon-section {
-        align-self: center;
-        .comment-icon {
-          @include icon(30px);
-        }
-        input {
-          display: none;
-        }
-      }
+    }
+    .show-pop-comment {
+      display: flex;
+    }
+    .hide-pop-comment {
+      display: none;
     }
   }
 }

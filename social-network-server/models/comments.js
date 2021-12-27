@@ -3,10 +3,11 @@ const { Schema, model } = mongoose;
 
 let commentSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User",
+    // },
+    user: Object,
     post: {
       type: Schema.Types.ObjectId,
       ref: "Post",
