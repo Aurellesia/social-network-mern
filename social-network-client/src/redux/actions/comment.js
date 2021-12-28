@@ -5,6 +5,10 @@ import {
   ERROR_READ_COMMENT,
   SUCCESS_VIEW_COMMENT,
   ERROR_VIEW_COMMENT,
+  SUCCESS_DELETE_COMMENT,
+  ERROR_DELETE_COMMENT,
+  SUCCESS_LIKE_COMMENT,
+  ERROR_LIKE_COMMENT,
 } from "../constants/comment";
 
 export const successCreateComment = (payload) => ({
@@ -34,5 +38,25 @@ export const successViewComment = (payload) => ({
 
 export const failViewComment = (payload) => ({
   type: ERROR_VIEW_COMMENT,
+  payload,
+});
+
+export const successDeleteComment = (payload) => ({
+  type: SUCCESS_DELETE_COMMENT,
+  payload,
+});
+
+export const failDeleteComment = (payload) => ({
+  type: ERROR_DELETE_COMMENT,
+  payload,
+});
+
+export const successLikeComment = (payload) => ({
+  type: SUCCESS_LIKE_COMMENT,
+  payload,
+});
+
+export const failLikeComment = (payload) => ({
+  type: ERROR_LIKE_COMMENT,
   payload,
 });

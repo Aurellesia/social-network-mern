@@ -125,7 +125,8 @@ const destroy = async (req, res, next) => {
   try {
     const { commentId } = req.params;
     const user = req.user;
-    const comment = await Comment.findOneAndDelete({ _id: commentId, user });
+    const comment = await Comment.findOne({ _id: commentId, user });
+
     if (comment === null) {
       res.json({
         err: 1,
@@ -133,16 +134,19 @@ const destroy = async (req, res, next) => {
           "Comment not found or you are not allowed to delete this comment",
       });
     } else {
-      await Post.findOneAndUpdate(
-        { comments: { $in: [commentId] } },
-        { $pull: { comments: commentId } },
+      await Post.updateOne(
+        { comments: { $elemMatch: comment } },
+        { $pull: { comments: comment } },
         { new: true, runValidators: true }
       );
+      await Comment.deleteOne(comment);
+
+      return res.json({
+        message: "Delete comment success",
+      });
     }
 
-    return res.json({
-      message: "Delete comment success",
-    });
+    return res.json(result);
   } catch (err) {
     if (err && err.name === "ValidationError") {
       return res.json({
@@ -160,6 +164,9 @@ const like = async (req, res, next) => {
     const { commentId } = req.params;
     const user = req.user._id;
     let comment = await Comment.findById({ _id: commentId });
+    const post = await Post.findOne({
+      comments: { $elemMatch: { _id: ObjectId(commentId) } },
+    });
     if (!comment) {
       res.json({
         err: 1,
@@ -172,17 +179,33 @@ const like = async (req, res, next) => {
         { $push: { likes: user } },
         { new: true, runValidators: true }
       );
+      comment = await Comment.find({
+        post: post._id,
+      });
+      await Post.updateOne(
+        { comments: { $elemMatch: { _id: ObjectId(commentId) } } },
+        { $set: { comments: comment } },
+        { new: true, runValidators: true }
+      );
     } else {
       comment = await Comment.findByIdAndUpdate(
         { _id: commentId },
         { $pull: { likes: user } },
         { new: true, runValidators: true }
       );
+      comment = await Comment.find({
+        post: post._id,
+      });
+      await Post.updateOne(
+        { comments: { $elemMatch: { _id: ObjectId(commentId) } } },
+        { $set: { comments: comment } },
+        { new: true, runValidators: true }
+      );
     }
     if (!comment) {
       return res.json({
         error: 1,
-        message: `No comment found`,
+        message: `Comment not found`,
       });
     }
     return res.json(comment);

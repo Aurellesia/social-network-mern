@@ -63,12 +63,22 @@ import FaComment from "@meronex/icons/fa/FaComment";
 import FaShareAlt from "@meronex/icons/fa/FaShareAlt";
 import AiFillCamera from "@meronex/icons/ai/AiFillCamera";
 import MdInsertEmoticon from "@meronex/icons/md/MdInsertEmoticon";
-import { createComment, readComment, viewComment } from "../../api/comment";
+import {
+  createComment,
+  deleteComment,
+  likeComment,
+  readComment,
+  viewComment,
+} from "../../api/comment";
 import {
   failCreateComment,
+  failDeleteComment,
+  failLikeComment,
   failReadComment,
   failViewComment,
   successCreateComment,
+  successDeleteComment,
+  successLikeComment,
   successReadComment,
   successViewComment,
 } from "../../redux/actions/comment";
@@ -85,6 +95,7 @@ const Profile = () => {
   const [image, setImage] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const [idPost, setIdPost] = useState("");
+  const [idComment, setIdComment] = useState("");
   const [modalEdit, setModalEdit] = useState(false);
   const [comment, setComment] = useState("");
   const showModalFollowers = modalFollowers ? "show-modal" : "hide-modal";
@@ -179,6 +190,17 @@ const Profile = () => {
     setSelectedId("");
   };
 
+  const handleDeleteComment = (id) => {
+    deleteComment(id)
+      .then((res) => dispatch(successDeleteComment(res)))
+      .then(() =>
+        readPosts()
+          .then((res) => dispatch(successReadPosts(res)))
+          .catch((err) => dispatch(failReadPosts(err)))
+      )
+      .catch((err) => dispatch(failDeleteComment(err)));
+  };
+
   const closeModalEdit = () => {
     setModalEdit(false);
   };
@@ -213,17 +235,6 @@ const Profile = () => {
     setComment("");
   };
 
-  const handleGetComment = (comment) => {
-    // comment?.map((item) => {
-    //   viewComment(item)
-    //     .then((res) => dispatch(successViewComment(res)))
-    //     .catch((err) => dispatch(failViewComment(err)));
-    // });
-    // readComment(id)
-    //   .then((res) => dispatch(successReadComment(res)))
-    //   .catch((err) => dispatch(failReadComment(err)));
-  };
-
   const showMore = (id) => {
     if (selectedId === id) {
       return "show-modal-more";
@@ -251,6 +262,17 @@ const Profile = () => {
       .catch((err) => dispatch(failLikePosts(err)));
   };
 
+  const handleLikeComment = (id) => {
+    likeComment(id)
+      .then((res) => dispatch(successLikeComment(res)))
+      .then(() =>
+        readPosts()
+          .then((res) => dispatch(successReadPosts(res)))
+          .catch((err) => dispatch(failReadPosts(err)))
+      )
+      .catch((err) => dispatch(failLikeComment(err)));
+  };
+
   const actionColor = (postLike, userId) => {
     if (postLike && postLike.includes(userId)) {
       return "liked-btn";
@@ -259,6 +281,21 @@ const Profile = () => {
     }
   };
 
+  const handleMoreComment = (id) => {
+    if (!idComment) {
+      setIdComment(id);
+    } else {
+      setIdComment("");
+    }
+  };
+
+  const showMoreComment = (id) => {
+    if (idComment === id) {
+      return "show-modal-more";
+    } else {
+      return "hide-modal-more";
+    }
+  };
   return (
     <>
       {!userSelector.user ? (
@@ -460,12 +497,7 @@ const Profile = () => {
                             {item.likes.length} Likes {item.comments.length}{" "}
                             Comments 0 Shares
                           </span>
-                          <span
-                            className="text-11"
-                            // onClick={() => handleGetComment(item.comments)}
-                          >
-                            Show All Comments
-                          </span>
+                          <span className="text-11">Show All Comments</span>
                         </div>
                         {item.comments.map((com) => {
                           return (
@@ -480,24 +512,55 @@ const Profile = () => {
                                   <span className="text-13-bold">
                                     {com.user.first_name} {com.user.last_name}
                                   </span>
+
                                   <span className="text-9">
                                     {convertDate(com.createdAt)}
                                   </span>
                                 </div>
+
+                                <div
+                                  className="btn-more"
+                                  onClick={() => handleMoreComment(com._id)}
+                                >
+                                  <CgMoreVerticalAlt className="icon-20" />
+                                </div>
+                                <div
+                                  className={`modal-more-comment ${showMoreComment(
+                                    com._id
+                                  )}`}
+                                >
+                                  <div
+                                    className="more-action"
+                                    onClick={() => {
+                                      handleDeleteComment(com._id);
+                                    }}
+                                  >
+                                    <span className="text-14">Delete</span>
+                                  </div>
+                                </div>
                               </div>
+
                               <div className="comment-content">
                                 <span className="text-12">{com.text}</span>
                               </div>
                               <div className="comment-act-section">
-                                <span className="text-10-bold">Like</span>
-                                <span className="text-10-bold">Reply</span>
-                                <span className="text-10-bold">Share</span>
+                                <span
+                                  type="button"
+                                  onClick={() => handleLikeComment(com._id)}
+                                  className={`text-10-bold ${actionColor(
+                                    com.likes,
+                                    userId
+                                  )}`}
+                                >
+                                  Like
+                                </span>
+                                <span className="text-10">
+                                  {com.likes.length} Likes{" "}
+                                </span>
                               </div>
                             </div>
                           );
                         })}
-
-                        {/* ==================================== */}
 
                         <div className={`${showPopComment(item._id)}`}>
                           <div className={`add-comment`}>

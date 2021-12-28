@@ -1,6 +1,10 @@
 .text-9 {
   @include text(9px);
 }
+
+.text-10 {
+  @include text(10px);
+}
 .text-10-bold {
   @include text(10px, 700);
 }

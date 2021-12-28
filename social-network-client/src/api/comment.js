@@ -34,3 +34,25 @@ export const viewComment = async (id) => {
     },
   });
 };
+
+export const deleteComment = async (id) => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+  return await axios.delete(`${config.api_host}/api/comments/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const likeComment = async (id) => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+  return await axios.post(`${config.api_host}/api/comments/likes/${id}`, null, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

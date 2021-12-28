@@ -173,12 +173,7 @@
     .action-section {
       @include flex($justify: space-around);
       margin: 1rem 0 1rem 0;
-      .liked-btn {
-        color: $Blue;
-      }
-      .unlike-btn {
-        color: $Black;
-      }
+
       .action-btn {
         .text-14-bold {
           align-self: center;
@@ -209,6 +204,13 @@
       padding: 0.5rem;
       .comment-header {
         margin-bottom: 0.5rem;
+        .btn-more {
+          margin-top: -1rem;
+          margin-left: 18rem;
+          .icon-20 {
+            @include icon(15px);
+          }
+        }
         .comment-profile-pict {
           @include picture(2.5rem, 50%);
           margin-right: 0.5rem;
@@ -219,6 +221,11 @@
       }
       .comment-act-section {
         margin: 1rem 0 0.5rem 3rem;
+        display: flex;
+        align-items: center;
+        .total-act-comment {
+          margin-left: 14rem;
+        }
         .text-10-bold {
           align-self: center;
           margin-right: 1rem;
@@ -264,6 +271,12 @@
     .hide-pop-comment {
       display: none;
     }
+  }
+  .liked-btn {
+    color: $Blue;
+  }
+  .unlike-btn {
+    color: $Black;
   }
 }
 //------------------------

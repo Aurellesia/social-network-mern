@@ -70,14 +70,9 @@
     }
   }
 }
-.show-modal {
-  display: flex;
-}
-.hide-modal {
-  display: none;
-}
 
-.modal-more {
+.modal-more,
+.modal-more-comment {
   background-color: $White;
   border: 1px solid $SilverSand;
   border-radius: 20px;
@@ -98,9 +93,15 @@
     }
   }
 }
+.modal-more-comment {
+  margin-left: 27%;
+  margin-top: 3rem;
+}
+.show-modal,
 .show-modal-more {
   display: flex;
 }
+.hide-modal,
 .hide-modal-more {
   display: none;
 }
