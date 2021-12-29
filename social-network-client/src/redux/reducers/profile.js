@@ -19,6 +19,7 @@ import {
 
 const initialState = {
   user: {},
+  userFriend: {},
   error: "",
   followers: [],
   following: [],
@@ -78,14 +79,14 @@ export default function profileReducer(state = initialState, action) {
     case SUCCESS_FETCH_FRIEND_PROFILE:
       return {
         ...state,
-        user: action.payload,
+        userFriend: action.payload,
       };
     case ERROR_FETCH_FRIEND_PROFILE:
       return { ...state, error: action.payload.message };
     case SUCCESS_FOLLOW:
       return {
         ...state,
-        user: action.payload,
+        userFriend: action.payload,
       };
     case ERROR_FOLLOW:
       return { ...state, error: action.payload.message };

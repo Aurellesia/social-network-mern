@@ -13,6 +13,10 @@ import {
   SUCCESS_DELETE_POSTS,
   SUCCESS_LIKE_POSTS,
   SUCCESS_FETCH_LIKE_POSTS,
+  ERROR_READ_POSTS_USER,
+  SUCCESS_READ_POSTS_USER,
+  SUCCESS_READ_TIMELINE,
+  ERROR_READ_TIMELINE,
 } from "../constants/posts";
 
 export const successCreatePosts = (payload) => ({
@@ -82,5 +86,25 @@ export const successFetchLikePosts = (payload) => ({
 
 export const failFetchLikePosts = (payload) => ({
   type: ERROR_FETCH_LIKE_POSTS,
+  payload,
+});
+
+export const successReadPostsUser = (payload) => ({
+  type: SUCCESS_READ_POSTS_USER,
+  payload,
+});
+
+export const failReadPostsUser = (payload) => ({
+  type: ERROR_READ_POSTS_USER,
+  payload,
+});
+
+export const successReadTimeline = (payload) => ({
+  type: SUCCESS_READ_TIMELINE,
+  payload,
+});
+
+export const failReadTimeline = (payload) => ({
+  type: ERROR_READ_TIMELINE,
   payload,
 });

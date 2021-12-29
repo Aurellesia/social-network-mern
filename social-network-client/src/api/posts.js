@@ -77,3 +77,25 @@ export const getLike = async (id) => {
     },
   });
 };
+
+export const readPostsUser = async (id) => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+  return await axios.get(`${config.api_host}/api/posts/user/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const readTimeline = async () => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+  return await axios.get(`${config.api_host}/api`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

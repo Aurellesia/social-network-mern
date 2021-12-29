@@ -29,6 +29,9 @@
   @include box();
 }
 
+.below-navbar {
+  margin-top: 5rem;
+}
 .profile {
   margin-bottom: 2rem;
   margin-top: 4rem;
@@ -277,6 +280,12 @@
   }
   .unlike-btn {
     color: $Black;
+  }
+  .show-btn-more {
+    display: block;
+  }
+  .hide-btn-more {
+    display: none;
   }
 }
 //------------------------

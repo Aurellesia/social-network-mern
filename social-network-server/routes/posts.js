@@ -14,6 +14,7 @@ router.post(
 );
 
 router.get("/posts/:id", verifyToken, postController.view);
+router.get("/posts/user/:id", verifyToken, postController.indexByUser);
 router.get("/posts", verifyToken, postController.index);
 router.delete("/posts/:id", verifyToken, postController.destroy);
 router.put(

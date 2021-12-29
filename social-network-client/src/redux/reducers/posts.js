@@ -13,6 +13,10 @@ import {
   SUCCESS_DELETE_POSTS,
   SUCCESS_LIKE_POSTS,
   SUCCESS_FETCH_LIKE_POSTS,
+  SUCCESS_READ_POSTS_USER,
+  ERROR_READ_POSTS_USER,
+  SUCCESS_READ_TIMELINE,
+  ERROR_READ_TIMELINE,
 } from "../constants/posts";
 
 const initialState = {
@@ -74,6 +78,20 @@ export default function postsReducer(state = initialState, action) {
         liker: action.payload.data,
       };
     case ERROR_FETCH_LIKE_POSTS:
+      return { ...state, error: action.payload.message };
+    case SUCCESS_READ_POSTS_USER:
+      return {
+        ...state,
+        posted: action.payload.data,
+      };
+    case ERROR_READ_POSTS_USER:
+      return { ...state, error: action.payload.message };
+    case SUCCESS_READ_TIMELINE:
+      return {
+        ...state,
+        posted: action.payload.data,
+      };
+    case ERROR_READ_TIMELINE:
       return { ...state, error: action.payload.message };
     default:
       return state;

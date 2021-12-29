@@ -1,4 +1,5 @@
 const Post = require("../models/posts");
+const User = require("../models/users");
 const config = require("../config");
 const path = require("path");
 const fs = require("fs");
@@ -59,7 +60,7 @@ const store = async (req, res, next) => {
           .map((item) => item.filename);
       }
       let post = new Post({
-        user: user._id,
+        user: user,
         text,
         images: imageFiltered,
         videos: videoFiltered,
@@ -87,8 +88,10 @@ const store = async (req, res, next) => {
 
 const index = async (req, res, next) => {
   try {
-    const user = req.user;
-    let post = await Post.find({ user: user._id }).sort({ createdAt: "desc" });
+    const user = req.user._id;
+    let post = await Post.find({ "user._id": user }).sort({
+      createdAt: "desc",
+    });
     if (!post) {
       return res.json({
         error: 1,
@@ -112,10 +115,34 @@ const view = async (req, res, next) => {
   try {
     const user = req.user;
     const { id } = req.params;
-    let post = await Post.find({ _id: id, user: user._id }).populate({
+    let post = await Post.find({ _id: id, user: user }).populate({
       path: "comments",
       model: "Comment",
     });
+    if (!post) {
+      return res.json({
+        error: 1,
+        message: `Post not found!`,
+      });
+    }
+    return res.json(post);
+  } catch (err) {
+    if (err && err.name === "ValidationError") {
+      return res.json({
+        error: 1,
+        message: err.message,
+        fields: err.errors,
+      });
+    }
+    next(err);
+  }
+};
+
+const indexByUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    let post = await Post.find({ "user._id": id });
+    console.log(post);
     if (!post) {
       return res.json({
         error: 1,
@@ -284,4 +311,4 @@ const destroy = async (req, res, next) => {
   }
 };
 
-module.exports = { store, index, destroy, update, view };
+module.exports = { store, index, destroy, update, view, indexByUser };

@@ -3,10 +3,7 @@ const { Schema, model } = mongoose;
 
 let postSchema = new Schema(
   {
-    user: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
+    user: Object,
     text: {
       type: String,
       required: [true, "Text cannot be empty"],

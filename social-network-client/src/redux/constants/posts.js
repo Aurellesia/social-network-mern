@@ -19,3 +19,10 @@ export const ERROR_LIKE_POSTS = "redux/constants/ERROR_LIKE_POSTS";
 export const SUCCESS_FETCH_LIKE_POSTS =
   "redux/constants/SUCCESS_FETCH_LIKE_POSTS";
 export const ERROR_FETCH_LIKE_POSTS = "redux/constants/ERROR_FETCH_LIKE_POSTS";
+
+export const SUCCESS_READ_POSTS_USER =
+  "redux/constants/SUCCESS_READ_POSTS_USER";
+export const ERROR_READ_POSTS_USER = "redux/constants/ERROR_READ_POSTS_USER";
+
+export const SUCCESS_READ_TIMELINE = "redux/constants/SUCCESS_READ_TIMELINE";
+export const ERROR_READ_TIMELINE = "redux/constants/ERROR_READ_TIMELINE";

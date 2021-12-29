@@ -102,17 +102,6 @@ const following = async (req, res, next) => {
         message: "You are not following anyone!",
       });
     }
-    // const user = await Promise.all(
-    //   following.map(async (item) => {
-    //     let userFollowed = await User.findById({ _id: item.user });
-    //     return userFollowed;
-    //   })
-    // );
-    // if (user.length === 0) {
-    //   return res.json({
-    //     message: "You are not following anyone.",
-    //   });
-    // }
     return res.json(following);
   } catch (err) {
     if (err && err.name === "ValidationError") {

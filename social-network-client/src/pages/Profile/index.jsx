@@ -160,6 +160,7 @@ const Profile = () => {
       setSelectedId("");
     }
   };
+
   const handleEdit = () => {
     setModalEdit(true);
     setId(selectedId);
@@ -188,6 +189,13 @@ const Profile = () => {
       )
       .catch((err) => dispatch(failDeletePosts(err)));
     setSelectedId("");
+  };
+  const showBtnMore = (id) => {
+    if (id === userId) {
+      return "show-btn-more";
+    } else {
+      return "hide-btn-more";
+    }
   };
 
   const handleDeleteComment = (id) => {
@@ -240,14 +248,6 @@ const Profile = () => {
       return "show-modal-more";
     } else {
       return "hide-modal-more";
-    }
-  };
-
-  const showPopComment = (id) => {
-    if (idPost === id) {
-      return "show-pop-comment";
-    } else {
-      return "hide-pop-comment";
     }
   };
 
@@ -390,7 +390,6 @@ const Profile = () => {
                 dataImage={image}
                 dataPosts={postsSelector.posts}
               />
-
               {Object.keys(postsSelector.posted).length === 0 ? (
                 <div>
                   <span className="text-14">No posts yet</span>
@@ -478,11 +477,7 @@ const Profile = () => {
                             <span className="text-14-bold">Like</span>
                           </div>
 
-                          <div
-                            type="button"
-                            className="action-btn"
-                            onClick={() => handleComment(item._id)}
-                          >
+                          <div type="button" className="action-btn">
                             <FaComment className="icon-20" />
                             <span className="text-14-bold">Comment</span>
                           </div>
@@ -504,7 +499,11 @@ const Profile = () => {
                             <div className="comment-box">
                               <div className="comment-header">
                                 <img
-                                  src={`${config.api_host}/images/profiles/${com.user.picture}`}
+                                  src={
+                                    com.user.picture
+                                      ? `${config.api_host}/images/profiles/${com.user.picture}`
+                                      : empty
+                                  }
                                   alt="small profile pict"
                                   className="comment-profile-pict"
                                 />
@@ -519,7 +518,9 @@ const Profile = () => {
                                 </div>
 
                                 <div
-                                  className="btn-more"
+                                  className={`btn-more ${showBtnMore(
+                                    com.user._id
+                                  )}`}
                                   onClick={() => handleMoreComment(com._id)}
                                 >
                                   <CgMoreVerticalAlt className="icon-20" />
@@ -562,7 +563,7 @@ const Profile = () => {
                           );
                         })}
 
-                        <div className={`${showPopComment(item._id)}`}>
+                        <div className={`show-pop-comment`}>
                           <div className={`add-comment`}>
                             <img
                               src={
@@ -578,6 +579,7 @@ const Profile = () => {
                               onSubmit={handleSubmitComment}
                             >
                               <textarea
+                                onFocus={() => handleComment(item._id)}
                                 name="text"
                                 id="text"
                                 placeholder="Add a comment"
