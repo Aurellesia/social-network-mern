@@ -30,17 +30,49 @@
     height: 28rem;
     background-color: $White;
     border-radius: 20px;
-    border: 1px solid $RaisinBlack;
+    // border: 1px solid $RaisinBlack;s
     .cancel-modal {
       text-align: right;
       padding: 0.7rem 1rem;
-      span {
-        cursor: pointer;
+    }
+    .title-modal {
+      padding-right: 7.5rem;
+    }
+    .cancel-icon {
+      cursor: pointer;
+    }
+    .link {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      &:hover {
+        background-color: $SilverSand;
       }
+      .friend-link {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        .text-followers {
+          display: flex;
+          text-align: left;
+          justify-content: center;
+          flex-direction: column;
+        }
+      }
+
+      //
+      .followers-pict {
+        @include picture(3rem, 50%);
+        margin: 0.5rem 1rem 0.5rem 2rem;
+      }
+    }
+    .modal-content {
+      display: flex;
+      flex-direction: column;
     }
   }
   .modal {
-    width: 25rem;
+    width: 23rem;
   }
   .modal-edit {
     @include card(auto, 500px, 1rem);

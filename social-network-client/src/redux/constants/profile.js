@@ -30,3 +30,6 @@ export const ERROR_FETCH_FRIEND_PROFILE =
 
 export const SUCCESS_FOLLOW = "redux/constants/SUCCESS_FOLLOW";
 export const ERROR_FOLLOW = "redux/constants/ERROR_FOLLOW";
+
+export const SUCCESS_CHANGE_PASS = "redux/constants/SUCCESS_CHANGE_PASS";
+export const ERROR_CHANGE_PASS = "redux/constants/ERROR_CHANGE_PASS";

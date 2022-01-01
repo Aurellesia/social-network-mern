@@ -45,6 +45,7 @@ export default function postsReducer(state = initialState, action) {
     case ERROR_READ_POSTS:
       return { ...state, error: action.payload.message };
     case SUCCESS_VIEW_POSTS:
+      // console.log(action.payload);
       return {
         ...state,
         post: action.payload.data,

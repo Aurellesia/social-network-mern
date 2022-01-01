@@ -10,6 +10,7 @@ import {
   fetchFollowing,
   fetchProfile,
   fetchFollowers,
+  follow,
 } from "../../api/profile";
 import {
   createPosts,
@@ -26,6 +27,8 @@ import {
   successFetchProfile,
   failFetchFollowers,
   successFetchFollowers,
+  successFollow,
+  failFollow,
 } from "../../redux/actions/profile";
 import {
   failCreatePosts,
@@ -100,6 +103,7 @@ const Profile = () => {
   const [comment, setComment] = useState("");
   const showModalFollowers = modalFollowers ? "show-modal" : "hide-modal";
   const showModalEdit = modalEdit ? "show-modal" : "hide-modal";
+  const [offSet, setOffSet] = useState(0);
   const navigate = useNavigate();
 
   let userId = localStorage.getItem("user_id")
@@ -151,8 +155,14 @@ const Profile = () => {
           .catch((err) => dispatch(failReadPosts(err)))
       )
       .catch((err) => dispatch(failCreatePosts(err)));
+    resetFile();
   };
 
+  const resetFile = () => {
+    setImage("");
+    const preview = document.getElementById("preview");
+    preview.style.display = "none";
+  };
   const handleClickMore = (id) => {
     if (!selectedId) {
       setSelectedId(id);
@@ -226,6 +236,7 @@ const Profile = () => {
       )
       .catch((err) => dispatch(failUpdatePosts(err)));
     setModalEdit(false);
+    setText("");
   };
 
   const handleSubmitComment = async (e) => {
@@ -296,24 +307,64 @@ const Profile = () => {
       return "hide-modal-more";
     }
   };
+
+  const handleFollowBtn = async () => {
+    try {
+      await follow(id)
+        .then((res) => dispatch(successFollow(res)))
+        .catch((err) => dispatch(failFollow(err)));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleScroll = () => {
+    // const cardLeft = document.getElementById("card-left");
+    // const sticky = cardLeft.offsetTop;
+    if (offSet === 670) {
+      return "sticky";
+    }
+  };
+
   return (
     <>
       {!userSelector.user ? (
         <BounceLoader color="#201e20" />
       ) : (
         <>
-          <Modal show={showModalFollowers} handleClose={closeModalFollowers}>
-            <br />
+          <Modal
+            title={followers ? "Followers" : "Following"}
+            show={showModalFollowers}
+            handleClose={closeModalFollowers}
+          >
             {followers ? (
               !userSelector.followers.data ? (
                 <BounceLoader color="#201e20" />
               ) : (
                 userSelector.followers.data.map((item, index) => {
                   return (
-                    <Link key={index + 1} to={`/profile/${item._id}`}>
-                      <span>
-                        {item.first_name} {item.last_name}
-                      </span>
+                    <Link
+                      key={index + 1}
+                      to={`/profile/${item._id}`}
+                      className="link"
+                    >
+                      <div className="friend-link">
+                        <img
+                          src={
+                            item.picture
+                              ? `${config.api_host}/images/profiles/${item.picture}`
+                              : empty
+                          }
+                          alt="followers pict"
+                          className="followers-pict"
+                        />
+                        <div className="text-followers">
+                          <span className="text-16-bold">
+                            {item.first_name} {item.last_name}
+                          </span>
+                          <span className="text-11">{item.current_city}</span>
+                        </div>
+                      </div>
                     </Link>
                   );
                 })
@@ -323,8 +374,28 @@ const Profile = () => {
             ) : (
               userSelector.following.data.map((item, index) => {
                 return (
-                  <Link key={index + 2} to={`/profile/${item._id}`}>
-                    <span>{item.first_name}</span>
+                  <Link
+                    key={index + 1}
+                    to={`/profile/${item._id}`}
+                    className="link"
+                  >
+                    <div className="friend-link">
+                      <img
+                        src={
+                          item.picture
+                            ? `${config.api_host}/images/profiles/${item.picture}`
+                            : empty
+                        }
+                        alt="followers pict"
+                        className="followers-pict"
+                      />
+                      <div className="text-followers">
+                        <span className="text-16-bold">
+                          {item.first_name} {item.last_name}
+                        </span>
+                        <span className="text-11">{item.current_city}</span>
+                      </div>
+                    </div>
                   </Link>
                 );
               })
@@ -337,7 +408,7 @@ const Profile = () => {
                 <span onClick={closeModalEdit}>&times;</span>
               </div>
               <div>
-                {!postsSelector.post[0] ? (
+                {!postsSelector.post.length ? (
                   <BounceLoader color="#201e20" />
                 ) : (
                   <>
@@ -378,8 +449,10 @@ const Profile = () => {
                 dataPost={postsSelector.posted}
               />
               <CardAboutMe dataUser={userSelector.user} />
-              <CardContactMe dataUser={userSelector.user} />
-              <CardGallery dataImage={empty} />
+              <div className="sticky">
+                <CardContactMe dataUser={userSelector.user} />
+                <CardGallery dataPost={postsSelector.posted} />
+              </div>
             </div>
             <div>
               <CardPosting

@@ -82,6 +82,11 @@ let userSchema = new Schema(
       maxLength: [100, "Maximum business email length is 100 characters"],
       default: "",
     },
+    facebook: {
+      type: String,
+      maxLength: [100, "Maximum telegram length is 100 characters"],
+      default: "",
+    },
     telegram: {
       type: String,
       maxLength: [100, "Maximum telegram length is 100 characters"],

@@ -1,11 +1,15 @@
-const Modal = ({ show, children, handleClose }) => {
+const Modal = ({ show, children, handleClose, title }) => {
   return (
     <div className={`modal-container ${show} `}>
       <div className={`modal `}>
         <div className="cancel-modal">
-          <span onClick={handleClose}>&times;</span>
+          <span className="text-16-bold title-modal">{title}</span>
+          <span className="cancel-icon" onClick={handleClose}>
+            &times;
+          </span>
+          <hr />
         </div>
-        {children}
+        <div className="modal-content">{children}</div>
       </div>
     </div>
   );

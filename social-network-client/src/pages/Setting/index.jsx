@@ -44,6 +44,7 @@ const Setting = () => {
         setValue("instagram", data.payload.data.instagram);
         setValue("business_email", data.payload.data.business_email);
         setValue("telegram", data.payload.data.telegram);
+        setValue("facebook", data.payload.data.facebook);
         setImage(data.payload.data.picture);
       })
       .catch((err) => dispatch(failFetchProfile(err)));
@@ -217,6 +218,17 @@ const Setting = () => {
                 placeholder="youremail@gmail.com"
                 onChange={(e) => setValue("business_email", e.target.value)}
                 {...register("business_email")}
+              />
+              <label className="text-14-bold" htmlFor="facebook">
+                Facebook
+              </label>
+              <input
+                type="text"
+                id="facebook"
+                name="facebook"
+                placeholder="https://www.facebook.com/youraccount"
+                onChange={(e) => setValue("facebook", e.target.value)}
+                {...register("facebook")}
               />
               <label className="text-14-bold" htmlFor="telegram">
                 Telegram

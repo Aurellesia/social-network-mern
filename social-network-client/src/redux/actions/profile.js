@@ -15,6 +15,8 @@ import {
   ERROR_FETCH_FRIEND_PROFILE,
   SUCCESS_FOLLOW,
   ERROR_FOLLOW,
+  SUCCESS_CHANGE_PASS,
+  ERROR_CHANGE_PASS,
 } from "../constants/profile";
 
 export const successFetchProfile = (payload) => ({
@@ -93,5 +95,15 @@ export const successFollow = (payload) => ({
 
 export const failFollow = (payload) => ({
   type: ERROR_FOLLOW,
+  payload,
+});
+
+export const successChangePass = (payload) => ({
+  type: SUCCESS_CHANGE_PASS,
+  payload,
+});
+
+export const failChangePass = (payload) => ({
+  type: ERROR_CHANGE_PASS,
   payload,
 });

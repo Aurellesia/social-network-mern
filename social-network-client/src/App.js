@@ -1,6 +1,11 @@
 import "./App.css";
 import "./style/sass/styles.scss";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Timeline from "./pages/Timeline";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
@@ -12,6 +17,7 @@ import Logout from "./pages/Logout";
 import Followers from "./pages/Followers";
 import Following from "./pages/Following";
 import FriendsProfile from "./pages/FriendsProfile";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   return (
@@ -19,16 +25,72 @@ function App() {
       <div className="App">
         <Router>
           <Routes>
-            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/" element={<Timeline />} />
-            <Route path="/profile" exact element={<Profile />} />
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/followers/:id" element={<Followers />} />
-            <Route path="/following/:id" element={<Following />} />
-            <Route path="/profile/:id" element={<FriendsProfile />} />
-            <Route path="/profile/posts/:id" element={<Profile />} />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Timeline />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/logout"
+              element={
+                <PrivateRoute>
+                  <Logout />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/setting"
+              element={
+                <PrivateRoute>
+                  <Setting />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/followers/:id"
+              element={
+                <PrivateRoute>
+                  <Followers />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/following/:id"
+              element={
+                <PrivateRoute>
+                  <Following />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile/:id"
+              element={
+                <PrivateRoute>
+                  <FriendsProfile />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile/posts/:id"
+              element={
+                <PrivateRoute>
+                  <Profile />
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </Router>
       </div>

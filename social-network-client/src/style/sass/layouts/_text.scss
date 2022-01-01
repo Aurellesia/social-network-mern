@@ -23,6 +23,9 @@
 .text-14-bold {
   @include text(14px, 700);
 }
+.text-16-bold {
+  @include text(16px, 600);
+}
 .text-18-bold {
   @include text(18px, 700);
 }

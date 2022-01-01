@@ -115,7 +115,7 @@ const view = async (req, res, next) => {
   try {
     const user = req.user;
     const { id } = req.params;
-    let post = await Post.find({ _id: id, user: user }).populate({
+    let post = await Post.find({ _id: id, "user._id": user._id }).populate({
       path: "comments",
       model: "Comment",
     });
@@ -142,7 +142,6 @@ const indexByUser = async (req, res, next) => {
   try {
     const { id } = req.params;
     let post = await Post.find({ "user._id": id });
-    console.log(post);
     if (!post) {
       return res.json({
         error: 1,
@@ -169,7 +168,7 @@ const update = async (req, res, next) => {
     let { text } = req.body;
     let objectFile = [];
     let fileImage = "";
-    let post = await Post.findOne({ _id: id, user: user._id });
+    let post = await Post.findOne({ _id: id, "user._id": user._id });
     if (!post) {
       return res.json({
         error: 1,
@@ -274,7 +273,7 @@ const destroy = async (req, res, next) => {
     const { id } = req.params;
     let currentFiles = [];
     let fileImage = "";
-    let post = await Post.findOneAndDelete({ _id: id, user: user._id });
+    let post = await Post.findOneAndDelete({ _id: id, "user._id": user._id });
     if (!post) {
       return res.json({
         error: 1,

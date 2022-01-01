@@ -26,3 +26,15 @@ export const userLogout = async () => {
       return res;
     });
 };
+
+export const changePassword = async (data) => {
+  let token = localStorage.getItem("token")
+    ? localStorage.getItem("token")
+    : {};
+
+  return await axios.put(`${config.api_host}/api/change-password`, data, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+};

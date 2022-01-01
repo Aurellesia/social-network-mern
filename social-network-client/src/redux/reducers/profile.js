@@ -15,6 +15,8 @@ import {
   ERROR_FETCH_FRIEND_PROFILE,
   SUCCESS_FOLLOW,
   ERROR_FOLLOW,
+  SUCCESS_CHANGE_PASS,
+  ERROR_CHANGE_PASS,
 } from "../constants/profile";
 
 const initialState = {
@@ -89,6 +91,13 @@ export default function profileReducer(state = initialState, action) {
         userFriend: action.payload,
       };
     case ERROR_FOLLOW:
+      return { ...state, error: action.payload.message };
+    case SUCCESS_CHANGE_PASS:
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case ERROR_CHANGE_PASS:
       return { ...state, error: action.payload.message };
     default:
       return state;

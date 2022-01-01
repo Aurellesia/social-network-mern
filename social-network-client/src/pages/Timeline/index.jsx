@@ -157,7 +157,11 @@ const Timeline = () => {
                 <div className="card-posted">
                   <div className="posted-header">
                     <img
-                      src={empty}
+                      src={
+                        item.user.picture
+                          ? `${config.api_host}/images/profiles/${item.user.picture}`
+                          : empty
+                      }
                       alt="small profile pict"
                       className="profile-pict"
                     />

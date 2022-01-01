@@ -38,7 +38,7 @@ export const viewPosts = async (id) => {
   let token = localStorage.getItem("token")
     ? localStorage.getItem("token")
     : {};
-  return await axios.get(`${config.api_host}/api/posts/${id}`, {
+  return await axios.get(`${config.api_host}/api/posts/view/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,
     },
