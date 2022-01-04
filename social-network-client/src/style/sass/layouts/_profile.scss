@@ -165,6 +165,9 @@
 .post-box {
   resize: none;
 }
+.no-posts-yet {
+  @include flex();
+}
 .card-posted {
   @include card(auto, 500px, 1rem);
   .posted-header {

@@ -181,7 +181,7 @@ const Profile = () => {
                 dataPosts={postsSelector.posts}
               />
               {Object.keys(postsSelector.posted).length === 0 ? (
-                <div>
+                <div className="no-posts-yet">
                   <span className="text-14">No posts yet</span>
                 </div>
               ) : (

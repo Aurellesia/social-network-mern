@@ -36,6 +36,7 @@ const Setting = () => {
         setValue("first_name", data.payload.data.first_name);
         setValue("last_name", data.payload.data.last_name);
         setValue("job", data.payload.data.job);
+        setValue("workplace", data.payload.data.workplace);
         setValue("bio", data.payload.data.bio);
         setValue("current_city", data.payload.data.current_city);
         setValue("education", data.payload.data.education);
@@ -143,6 +144,16 @@ const Setting = () => {
                 onChange={(e) => setValue("job", e.target.value)}
                 {...register("job")}
               />
+              <label className="text-14-bold" htmlFor="workplace">
+                Workplace
+              </label>
+              <input
+                type="text"
+                id="workplace"
+                name="workplace"
+                onChange={(e) => setValue("workplace", e.target.value)}
+                {...register("workplace")}
+              />
               <label className="text-14-bold" htmlFor="current_city">
                 Current City
               </label>
@@ -170,7 +181,7 @@ const Setting = () => {
                 name="bio"
                 id="bio"
                 cols="30"
-                rows="7"
+                rows="5"
                 placeholder="Write about you"
                 onChange={(e) => setValue("bio", e.target.value)}
                 {...register("bio")}
