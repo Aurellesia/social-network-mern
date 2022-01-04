@@ -39,7 +39,7 @@ const SignIn = () => {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
       localStorage.setItem("user_id", user._id);
-      navigate("/");
+      navigate("/profile");
     }
     setStatus(statusList.success);
   };
