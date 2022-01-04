@@ -2,75 +2,51 @@ import "../../style/sass/styles.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, connect, useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { fetchFriendProfile, fetchProfile, follow } from "../../api/profile";
+import { fetchFriendProfile, fetchFollowing } from "../../api/profile";
+import { readPostsUser } from "../../api/posts";
 import Navbar from "../../components/Navbar";
 import BounceLoader from "react-spinners/BounceLoader";
-import { config } from "../../config";
 import {
   failFetchFriendProfile,
-  failFollow,
-  successFetchFollowers,
   successFetchFriendProfile,
-  successFollow,
-  failFetchFollowers,
   successFetchFollowing,
   failFetchFollowing,
-  successFetchProfile,
-  failFetchProfile,
 } from "../../redux/actions/profile";
-import AiFillLike from "@meronex/icons/ai/AiFillLike";
-import FaComment from "@meronex/icons/fa/FaComment";
-import FaShareAlt from "@meronex/icons/fa/FaShareAlt";
-import empty from "../../assets/icons/empty.png";
+import {
+  failReadPostsUser,
+  successReadPostsUser,
+} from "../../redux/actions/posts";
 import { useNavigate } from "react-router";
-import { fetchFollowers, fetchFollowing } from "../../api/profile";
-import Modal from "../../components/Modal";
+import ModalFollowers from "../../components/ModalFollowers";
 import HeaderProfile from "../../components/HeaderProfile";
 import CardFollowers from "../../components/CardFollowers";
 import CardAboutMe from "../../components/CardAboutMe";
 import CardContactMe from "../../components/CardContactMe";
 import CardGallery from "../../components/CardGallery";
-import convertDate from "../../utils/convertDate";
-import CgMoreVerticalAlt from "@meronex/icons/cg/CgMoreVerticalAlt";
-
-import {
-  failLikePosts,
-  failReadPostsUser,
-  successLikePosts,
-  successReadPostsUser,
-} from "../../redux/actions/posts";
-import { like, readPostsUser } from "../../api/posts";
-import {
-  failCreateComment,
-  failDeleteComment,
-  failLikeComment,
-  successCreateComment,
-  successDeleteComment,
-  successLikeComment,
-} from "../../redux/actions/comment";
-import { createComment, deleteComment, likeComment } from "../../api/comment";
+import ButtonFollow from "../../components/ButtonFollow";
+import LinkFollowers from "../../components/LinkFollowers";
+import HeaderPosted from "../../components/HeaderPosted";
+import PostedContent from "../../components/PostedContent";
+import ActionSection from "../../components/ActionSection";
+import ActionCount from "../../components/ActionCount";
+import CardComment from "../../components/CardComment";
+import InputComment from "../../components/InputComment";
 
 const FriendsProfile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [idPost, setIdPost] = useState("");
   const profileSelector = useSelector((state) => state.profile);
   const friendPostSelector = useSelector((state) => state.posts);
   const navigate = useNavigate();
-  const [modal, setModal] = useState(false);
   const [followers, setFollowers] = useState(false);
-  const showModal = modal ? "show-modal" : "hide-modal";
-  const [comment, setComment] = useState("");
-  const [idComment, setIdComment] = useState("");
+  const [modalFollowers, setModalFollowers] = useState(false);
+  const showModalFollowers = modalFollowers ? "show-modal" : "hide-modal";
 
-  let userId = localStorage.getItem("user_id")
+  const userId = localStorage.getItem("user_id")
     ? localStorage.getItem("user_id")
     : {};
 
   useEffect(() => {
-    fetchProfile()
-      .then((data) => dispatch(successFetchProfile(data)))
-      .catch((err) => dispatch(failFetchProfile(err)));
     fetchFriendProfile(id)
       .then((res) => dispatch(successFetchFriendProfile(res)))
       .catch((err) => dispatch(failFetchFriendProfile(err)));
@@ -82,116 +58,14 @@ const FriendsProfile = () => {
       .then((err) => dispatch(failReadPostsUser(err)));
   }, [dispatch, id]);
 
-  const showBtnMore = (id) => {
-    if (id === userId) {
-      return "show-btn-more";
-    } else {
-      return "hide-btn-more";
-    }
+  const closeModalFollowers = () => {
+    setModalFollowers(false);
   };
 
-  const handleFollowers = async () => {
-    setFollowers(true);
-    setModal(true);
-    await fetchFollowers(id)
-      .then((res) => dispatch(successFetchFollowers(res)))
-      .catch((err) => dispatch(failFetchFollowers(err)));
-  };
-
-  const handleFollowing = () => {
-    setFollowers(false);
-    setModal(true);
-  };
-  const handleClose = () => {
-    setModal(false);
-  };
-
-  const handleLike = (postId) => {
-    like(postId)
-      .then((res) => dispatch(successLikePosts(res)))
-      .then(() =>
-        readPostsUser(id)
-          .then((res) => dispatch(successReadPostsUser(res)))
-          .then((err) => dispatch(failReadPostsUser(err)))
-      )
-      .catch((err) => dispatch(failLikePosts(err)));
-  };
-
-  const actionColor = (postLike, userId) => {
-    if (postLike && postLike.includes(userId)) {
-      return "liked-btn";
-    } else {
-      return "unlike-btn";
-    }
-  };
-  const handleComment = (id) => {
-    if (!idPost) {
-      setIdPost(id);
-    } else {
-      setIdPost("");
-    }
-  };
-
-  const handleSubmitComment = async (e) => {
-    const commentData = new URLSearchParams();
-    commentData.append("text", comment);
-    e.preventDefault();
-    await createComment(commentData, idPost)
-      .then((res) => dispatch(successCreateComment(res)))
-      .then(() =>
-        readPostsUser(id)
-          .then((res) => dispatch(successReadPostsUser(res)))
-          .then((err) => dispatch(failReadPostsUser(err)))
-      )
-      .catch((err) => dispatch(failCreateComment(err)));
-    setComment("");
-  };
-
-  const handleLikeComment = (idPost) => {
-    likeComment(idPost)
-      .then((res) => dispatch(successLikeComment(res)))
-      .then(() =>
-        readPostsUser(id)
-          .then((res) => dispatch(successReadPostsUser(res)))
-          .then((err) => dispatch(failReadPostsUser(err)))
-      )
-      .catch((err) => dispatch(failLikeComment(err)));
-  };
-
-  const handleMoreComment = (id) => {
-    if (!idComment) {
-      setIdComment(id);
-    } else {
-      setIdComment("");
-    }
-  };
-
-  const showMoreComment = (id) => {
-    if (idComment === id) {
-      return "show-modal-more";
-    } else {
-      return "hide-modal-more";
-    }
-  };
-
-  const handleDeleteComment = (idPost) => {
-    deleteComment(idPost)
-      .then((res) => dispatch(successDeleteComment(res)))
-      .then(() =>
-        readPostsUser(id)
-          .then((res) => dispatch(successReadPostsUser(res)))
-          .then((err) => dispatch(failReadPostsUser(err)))
-      )
-      .catch((err) => dispatch(failDeleteComment(err)));
-  };
-  const handleFollowBtn = async () => {
-    try {
-      await follow(id)
-        .then((res) => dispatch(successFollow(res)))
-        .catch((err) => dispatch(failFollow(err)));
-    } catch (err) {
-      console.log(err);
-    }
+  const reloadPostFriend = () => {
+    readPostsUser(id)
+      .then((res) => dispatch(successReadPostsUser(res)))
+      .then((err) => dispatch(failReadPostsUser(err)));
   };
   return (
     <>
@@ -201,18 +75,23 @@ const FriendsProfile = () => {
         <BounceLoader color="#201e20" />
       ) : (
         <>
-          <Modal show={showModal} handleClose={handleClose}>
-            <br />
+          <ModalFollowers
+            title={followers ? "Followers" : "Following"}
+            show={showModalFollowers}
+            handleClose={closeModalFollowers}
+          >
             {followers ? (
               !profileSelector.followers.data ? (
                 <BounceLoader color="#201e20" />
               ) : (
                 profileSelector.followers.data.map((item, index) => {
                   return (
-                    <Link key={index} to={`/profile/${item._id}`}>
-                      <span>
-                        {item.first_name} {item.last_name}
-                      </span>
+                    <Link
+                      key={index}
+                      to={`/profile/${item._id}`}
+                      className="link"
+                    >
+                      <LinkFollowers data={item} />
                     </Link>
                   );
                 })
@@ -222,33 +101,36 @@ const FriendsProfile = () => {
             ) : (
               profileSelector.following.data.map((item, index) => {
                 return (
-                  <Link key={index} to={`/profile/${item._id}`}>
-                    <span>{item.first_name}</span>
+                  <Link
+                    key={index}
+                    to={`/profile/${item._id}`}
+                    className="link"
+                  >
+                    <LinkFollowers data={item} />
                   </Link>
                 );
               })
             )}
-          </Modal>
+          </ModalFollowers>
           <Navbar />
           <HeaderProfile dataUser={profileSelector.userFriend.data} />
-          <button className="follow-btn" onClick={handleFollowBtn}>
-            {profileSelector.userFriend.data.followers.includes(userId)
-              ? "Unfollow"
-              : "Follow"}
-          </button>
+          <ButtonFollow id={id} dataUser={profileSelector.userFriend.data} />
 
           <div className="container">
             <div>
               <CardFollowers
                 dataFollowers={profileSelector.userFriend.data.followers}
                 dataFollowing={profileSelector.following.data}
-                handleFollowers={handleFollowers}
-                handleFollowing={handleFollowing}
+                dataUser={profileSelector.userFriend.data}
+                setModalFollowers={setModalFollowers}
+                setFollowers={setFollowers}
                 dataPost={friendPostSelector.posted}
               />
               <CardAboutMe dataUser={profileSelector.userFriend.data} />
-              <CardContactMe dataUser={profileSelector.userFriend.data} />
-              <CardGallery dataImage={empty} />
+              <div className="sticky">
+                <CardContactMe dataUser={profileSelector.userFriend.data} />
+                <CardGallery dataImage={friendPostSelector.posted} />
+              </div>
             </div>
             <div>
               {Object.keys(friendPostSelector.posted).length === 0 ? (
@@ -256,165 +138,47 @@ const FriendsProfile = () => {
                   <span className="text-14">No posts yet</span>
                 </div>
               ) : (
-                friendPostSelector.posted?.map((item, index) => {
+                friendPostSelector.posted.map((item, index) => {
                   return (
                     <div key={index + 5} className="card-posted">
                       <div className="posted-header">
-                        <img
-                          src={
-                            profileSelector.userFriend.picture
-                              ? `${config.api_host}/images/profiles/${profileSelector.userFriend.picture}`
-                              : empty
-                          }
-                          alt="small profile pict"
-                          className="profile-pict"
+                        <HeaderPosted
+                          dataUser={profileSelector.userFriend.data}
+                          dataPost={item}
                         />
-                        <div className="posted-name-date">
-                          <span className="text-18-bold">
-                            {profileSelector.userFriend.data.first_name}{" "}
-                            {profileSelector.userFriend.data.last_name}
-                          </span>
-                          <span className="text-11">
-                            {convertDate(item.createdAt)}
-                          </span>{" "}
-                        </div>
                       </div>
 
                       <div className="posted-content">
-                        <span className="text-12">{item.text}</span>
+                        <PostedContent dataPost={item} />
                         <hr />
-                        <div className="action-section">
-                          <div
-                            type="button"
-                            className={`action-btn ${actionColor(
-                              item.likes,
-                              userId
-                            )}`}
-                            onClick={() => handleLike(item._id)}
-                          >
-                            <AiFillLike className="icon-20" />
-                            <span className="text-14-bold">Like</span>
-                          </div>
-                          <div className="action-btn">
-                            <FaComment className="icon-20" />
-                            <span className="text-14-bold">Comment</span>
-                          </div>
-                          <div className="action-btn">
-                            <FaShareAlt className="icon-20" />
-                            <span className="text-14-bold">Share</span>
-                          </div>
-                        </div>
+                        <ActionSection
+                          dataPost={item}
+                          userId={userId}
+                          reloadPost={reloadPostFriend}
+                        />
+                        <ActionCount dataPost={item} />
 
-                        <div className="comment-section">
-                          <span className="text-11">
-                            {item.likes.length} Likes {item.comments.length}{" "}
-                            Comments 0 Shares
-                          </span>
-                          <span className="text-11">Show All Comments</span>
-                        </div>
-                        {item.comments.map((com) => {
+                        {item.comments.map((com, index) => {
                           return (
-                            <div className="comment-box">
-                              <div className="comment-header">
-                                <img
-                                  src={`${config.api_host}/images/profiles/${com.user.picture}`}
-                                  alt="small profile pict"
-                                  className="comment-profile-pict"
-                                />
-                                <div className="comment-name-date">
-                                  <span className="text-13-bold">
-                                    {com.user.first_name} {com.user.last_name}
-                                  </span>
-
-                                  <span className="text-9">
-                                    {convertDate(com.createdAt)}
-                                  </span>
-                                </div>
-
-                                <div
-                                  className={`btn-more ${showBtnMore(
-                                    com.user._id
-                                  )}`}
-                                  onClick={() => handleMoreComment(com._id)}
-                                >
-                                  <CgMoreVerticalAlt className="icon-20" />
-                                </div>
-                                <div
-                                  className={`modal-more-comment ${showMoreComment(
-                                    com._id
-                                  )}`}
-                                >
-                                  <div
-                                    className="more-action"
-                                    onClick={() => {
-                                      handleDeleteComment(com._id);
-                                    }}
-                                  >
-                                    <span className="text-14">Delete</span>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="comment-content">
-                                <span className="text-12">{com.text}</span>
-                              </div>
-                              <div className="comment-act-section">
-                                <span
-                                  type="button"
-                                  onClick={() => handleLikeComment(com._id)}
-                                  className={`text-10-bold ${actionColor(
-                                    com.likes,
-                                    userId
-                                  )}`}
-                                >
-                                  Like
-                                </span>
-                                <span className="text-10">
-                                  {com.likes.length} Likes{" "}
-                                </span>
-                              </div>
-                            </div>
+                            <CardComment
+                              key={index}
+                              dataComment={com}
+                              userId={userId}
+                              reloadPost={reloadPostFriend}
+                            />
                           );
                         })}
-
-                        <div className="show-pop-comment">
-                          <div className="add-comment">
-                            <img
-                              src={
-                                profileSelector.user.picture
-                                  ? `${config.api_host}/images/profiles/${profileSelector.user.picture}`
-                                  : empty
-                              }
-                              alt="small profile pict"
-                              className="reply-profile-pict"
-                            />
-                            <form
-                              id="comment-form"
-                              onSubmit={handleSubmitComment}
-                            >
-                              <textarea
-                                onFocus={() => handleComment(item._id)}
-                                name="text"
-                                id="text"
-                                placeholder="Add a comment"
-                                className="comment-input"
-                                onChange={(e) => setComment(e.target.value)}
-                                value={comment}
-                              />
-                            </form>
-                            <button type="submit" form="comment-form">
-                              Comment
-                            </button>
-                          </div>
-                        </div>
+                        <InputComment
+                          dataUser={profileSelector.user}
+                          dataPost={item}
+                          reloadPost={reloadPostFriend}
+                        />
                       </div>
                     </div>
                   );
                 })
               )}
             </div>
-
-            {/* =================================== */}
           </div>
         </>
       )}

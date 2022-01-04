@@ -1,6 +1,5 @@
 import "../../style/sass/styles.scss";
 import MdPhotoSizeSelectActual from "@meronex/icons/md/MdPhotoSizeSelectActual";
-import BsCameraVideoFill from "@meronex/icons/bs/BsCameraVideoFill";
 
 const CardPosting = ({
   handleSubmit,
@@ -75,12 +74,12 @@ const CardPosting = ({
             />
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="videos">
               <BsCameraVideoFill className="posting-icon" />
             </label>
             <input id="videos" type="file" multiple accept="video/*" />
-          </div>
+          </div> */}
 
           <button className="btn-post" type="submit" form="form-post">
             <span className="text-14">Add Post</span>

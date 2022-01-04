@@ -1,13 +1,35 @@
 import "../../style/sass/styles.scss";
 import BounceLoader from "react-spinners/BounceLoader";
+import { fetchFollowers } from "../../api/profile";
+import {
+  failFetchFollowers,
+  successFetchFollowers,
+} from "../../redux/actions/profile";
+import { useDispatch } from "react-redux";
 
 const CardFollowers = ({
+  dataUser,
   dataFollowers,
   dataFollowing,
-  handleFollowers,
-  handleFollowing,
+  setModalFollowers,
+  setFollowers,
   dataPost,
 }) => {
+  const dispatch = useDispatch();
+
+  const handleFollowers = async () => {
+    setFollowers(true);
+    setModalFollowers(true);
+    await fetchFollowers(dataUser._id)
+      .then((res) => dispatch(successFetchFollowers(res)))
+      .catch((err) => dispatch(failFetchFollowers(err)));
+  };
+
+  const handleFollowing = () => {
+    setFollowers(false);
+    setModalFollowers(true);
+  };
+
   return (
     <div className="card-followers">
       <div className="followers-content">

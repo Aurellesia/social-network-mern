@@ -14,9 +14,7 @@ const timeline = async (req, res, next) => {
     }
     const post = await Promise.all(
       following.map(async (item) => {
-        console.log(item._id);
         let post = await Post.find({ "user._id": item._id.toString() });
-        console.log(post);
         return post;
       })
     );

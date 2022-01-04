@@ -125,8 +125,7 @@ const destroy = async (req, res, next) => {
   try {
     const { commentId } = req.params;
     const user = req.user;
-    const comment = await Comment.findOne({ _id: commentId, user });
-
+    const comment = await Comment.findOne({ _id: ObjectId(commentId) });
     if (comment === null) {
       res.json({
         err: 1,

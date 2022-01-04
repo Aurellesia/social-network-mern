@@ -6,7 +6,6 @@ const like = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = req.user._id;
-    console.log(user);
     let post = await Post.findById({ _id: id });
     if (!post) {
       return res.json({
@@ -51,7 +50,6 @@ const index = async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById({ _id: id });
     const likeList = post.likes;
-    console.log(likeList);
     let liker = await Promise.all(
       likeList.map(async (item) => {
         let user = await User.findById({ _id: item });

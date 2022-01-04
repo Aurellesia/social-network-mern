@@ -1,5 +1,4 @@
 const Post = require("../models/posts");
-const User = require("../models/users");
 const config = require("../config");
 const path = require("path");
 const fs = require("fs");
@@ -24,7 +23,6 @@ const store = async (req, res, next) => {
     let { text } = req.body;
 
     if (req.files) {
-      console.log(req.files);
       let url = ``;
       let uploadedFiles = req.files;
 

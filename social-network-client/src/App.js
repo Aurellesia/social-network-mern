@@ -1,11 +1,6 @@
 import "./App.css";
 import "./style/sass/styles.scss";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Timeline from "./pages/Timeline";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";

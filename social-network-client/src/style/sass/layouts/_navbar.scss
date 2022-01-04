@@ -39,3 +39,15 @@
     }
   }
 }
+
+.link-user {
+  @include flex($justify: left);
+  &:hover {
+    background-color: $SilverSand;
+    border-radius: 20rem;
+  }
+  .search-profile-pict {
+    @include picture(2.5rem, 50%);
+    margin: 0.3rem 1rem;
+  }
+}

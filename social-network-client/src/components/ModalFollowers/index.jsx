@@ -1,4 +1,4 @@
-const Modal = ({ show, children, handleClose, title }) => {
+const ModalFollowers = ({ show, children, handleClose, title }) => {
   return (
     <div className={`modal-container ${show} `}>
       <div className={`modal `}>
@@ -15,4 +15,4 @@ const Modal = ({ show, children, handleClose, title }) => {
   );
 };
 
-export default Modal;
+export default ModalFollowers;

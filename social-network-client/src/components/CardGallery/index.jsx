@@ -12,9 +12,10 @@ const CardGallery = ({ dataPost }) => {
     .filter((_, index) => {
       return index < 6;
     })
-    .map((item) => {
+    .map((item, index) => {
       return (
         <img
+          key={index}
           src={`${config.api_host}/images/posts/${item}`}
           alt="gallery-pict"
           className="gallery-pict"
