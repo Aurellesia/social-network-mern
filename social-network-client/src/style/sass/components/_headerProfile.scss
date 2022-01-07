@@ -1,0 +1,10 @@
+.profile {
+  @include flex($direc: column);
+  margin-bottom: 1rem;
+  margin-top: 4rem;
+  .main-profile-pict {
+    @include picture(10rem, 50%);
+    border: 5px solid $White;
+    margin: 2rem 0;
+  }
+}

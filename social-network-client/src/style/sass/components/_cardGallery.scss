@@ -1,0 +1,18 @@
+.card-gallery {
+  @include card();
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  .gallery-content {
+    @include flex($align: left, $direc: column);
+    .text-18-bold {
+      margin-bottom: 1rem;
+    }
+    .pict-container {
+      @include grid();
+      grid-template-columns: auto auto auto;
+      .gallery-pict {
+        @include picture(80px, 20px);
+      }
+    }
+  }
+}

@@ -6,4 +6,20 @@
 @import "./layouts/setting";
 @import "./layouts/profile";
 @import "./layouts/friendsprofile";
-@import "./layouts/modal";
+
+@import "./components/headerProfile";
+@import "./components/cardFollowers";
+@import "./components/cardAboutMe";
+@import "./components/cardContactMe";
+@import "./components/cardGallery";
+@import "./components/cardPosting";
+@import "./components/headerPosted";
+@import "./components/buttonMorePost";
+@import "./components/postedContent";
+@import "./components/actionSection";
+@import "./components/actionCount";
+@import "./components/cardComment";
+@import "./components/inputComment";
+@import "./components/searchModal";
+@import "./components/modalEdit";
+@import "./components/modalFollowers";

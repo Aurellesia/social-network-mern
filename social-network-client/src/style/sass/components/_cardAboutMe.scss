@@ -1,0 +1,22 @@
+.card-about-me {
+  @include card(auto, 100%);
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  .about-me-content {
+    @include flex($align: left, $direc: column);
+    margin-bottom: 1rem;
+    .text-18-bold {
+      margin-bottom: 1rem;
+    }
+    .edu-work {
+      @include flex($justify: left);
+      margin: 1rem 0 0 0;
+      .about-me-icon {
+        @include icon(30px, 1rem);
+      }
+    }
+    .blank {
+      display: none;
+    }
+  }
+}

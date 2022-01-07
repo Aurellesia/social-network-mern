@@ -17,7 +17,7 @@ import FiLogOut from "@meronex/icons/fi/FiLogOut";
 const Navbar = () => {
   const [box, setBox] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const debouncedFetchSearch = debounce(fetchSearch, 500);
+  const debouncedFetchSearch = debounce(fetchSearch, 1000);
   const showBox = box ? "show-search-box" : "hide-search-box";
   const dispatch = useDispatch();
   const list = useSelector((state) => state.search);

@@ -25,9 +25,9 @@ const ButtonMorePost = ({ dataPost, setModalEdit, setId, setText }) => {
 
   const showMorePost = (id) => {
     if (selectedId === id) {
-      return "show-modal-more";
+      return "show-modal-post";
     } else {
-      return "hide-modal-more";
+      return "hide-modal-post";
     }
   };
 
@@ -54,11 +54,11 @@ const ButtonMorePost = ({ dataPost, setModalEdit, setId, setText }) => {
   };
 
   return (
-    <div>
+    <div className="more-post-section">
       <div className="btn-more" onClick={() => handleMorePost(dataPost._id)}>
         <CgMoreVerticalAlt className="icon-20" />
       </div>
-      <div className={`modal-more ${showMorePost(dataPost._id)}`}>
+      <div className={`modal-more-post ${showMorePost(dataPost._id)}`}>
         <div type="button" className="more-action" onClick={handleEdit}>
           <span className="text-14">Edit Post</span>
         </div>

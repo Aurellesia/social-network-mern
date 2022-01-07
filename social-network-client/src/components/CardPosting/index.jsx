@@ -28,13 +28,11 @@ const CardPosting = ({
   };
   return (
     <div className="card-posting">
-      <form action="#" id="form-post" onSubmit={handleSubmit}>
+      <form className="form-post" onSubmit={handleSubmit}>
         <textarea
           className="post-box"
           name="text"
           id="text"
-          rows="5"
-          cols="38"
           placeholder="Create your new post"
           onChange={(e) => setText(e.target.value)}
           value={dataText}
@@ -49,6 +47,7 @@ const CardPosting = ({
             <span className="text-12-bold">
               {dataImage && `${dataImage.length}`} Files
               <span
+                className="cancel-file"
                 onClick={(_) => {
                   resetFile();
                 }}
@@ -57,7 +56,7 @@ const CardPosting = ({
               </span>
             </span>
           </div>
-          <div>
+          <div className="input-button">
             <label htmlFor="images">
               <MdPhotoSizeSelectActual className="posting-icon" />
             </label>

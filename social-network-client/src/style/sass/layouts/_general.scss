@@ -33,8 +33,8 @@ hr {
   margin-top: $mt;
   margin-bottom: $mt;
   &:hover {
-    color: $Blue;
     cursor: pointer;
+    transition: 0.3s;
   }
 }
 
@@ -49,8 +49,9 @@ hr {
   height: $h;
   width: $w;
   border-radius: 20px;
-  margin: 0.3rem 0.3rem 0.6rem 0.3rem;
-  padding: $p;
+  box-sizing: border-box;
+  // margin: 0.3rem 0.3rem 0.6rem 0.3rem;
+  // padding: $p;
 }
 
 @mixin flex($align: center, $justify: center, $direc: row, $ta: left) {
@@ -73,7 +74,7 @@ hr {
   border: 1px solid $SilverSand;
   border-radius: 20px;
   background-color: $White;
-  padding: 1.5rem;
+  // padding: 1.5rem;
   text-align: left;
 }
 
@@ -88,6 +89,7 @@ hr {
   &:hover {
     color: $Black;
     background-color: $SilverSand;
+    transition: 0.3s;
   }
 }
 
@@ -107,4 +109,25 @@ button {
   padding: 0.5rem 1rem;
   width: $w;
   align-self: center;
+}
+
+.card-posted {
+  @include card(auto, 100%);
+  box-sizing: border-box;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  .posted-header {
+    @include flex($justify: left);
+  }
+  .posted-content {
+    margin-top: 1rem;
+    text-align: left;
+    line-height: 100%;
+  }
+  .liked-btn {
+    color: $Blue;
+  }
+  .unlike-btn {
+    color: $Black;
+  }
 }

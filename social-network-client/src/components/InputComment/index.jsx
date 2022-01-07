@@ -39,7 +39,7 @@ const InputComment = ({ dataUser, dataPost, reloadPost }) => {
               : empty
           }
           alt="small profile pict"
-          className="reply-profile-pict"
+          className="add-comment-profile-pict"
         />
         <form id="comment-form" onSubmit={handleSubmitComment}>
           <textarea

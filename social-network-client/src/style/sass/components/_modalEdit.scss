@@ -1,0 +1,31 @@
+.modal-edit {
+  background-color: $White;
+  border-radius: 20px;
+  padding: 1rem;
+  .cancel-modal-edit {
+    text-align: right;
+    margin-right: 0.7rem;
+    margin-bottom: 0.7rem;
+    .cancel-icon-edit {
+      cursor: pointer;
+    }
+  }
+  .post-box {
+    @include box();
+    width: 100%;
+    resize: none;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  .input-section {
+    margin-top: 0.7rem;
+    display: flex;
+    justify-content: right;
+  }
+}
+.show-modal {
+  display: flex;
+}
+.hide-modal {
+  display: none;
+}

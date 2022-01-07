@@ -1,0 +1,24 @@
+.card-contact-me {
+  @include card();
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  .contact-me-content {
+    @include flex($align: left, $direc: column);
+    .text-18-bold {
+      margin-bottom: 1rem;
+    }
+    .sosmed {
+      .contact-me-icon {
+        @include icon(40px, 0.5rem);
+      }
+      .sosmed-link {
+        &:hover {
+          color: $Blue;
+        }
+      }
+      .disable {
+        display: none;
+      }
+    }
+  }
+}

@@ -35,9 +35,11 @@ const ModalEdit = ({ data, text, setText, id, modalEdit, setModalEdit }) => {
 
   return (
     <div className={`modal-container ${showModalEdit} `}>
-      <div className={`modal-edit `}>
-        <div className="cancel-modal">
-          <span onClick={closeModalEdit}>&times;</span>
+      <div className="modal-edit">
+        <div className="cancel-modal-edit">
+          <span onClick={closeModalEdit} className="cancel-icon-edit">
+            &times;
+          </span>
         </div>
         <div>
           {!data.post.length ? (

@@ -1,0 +1,16 @@
+.card-followers {
+  @include card(auto, 100%);
+  @include flex();
+  padding: 2rem 0;
+  margin-bottom: 0.5rem;
+  .followers-content {
+    @include flex($direc: column);
+    width: 2.5rem;
+    margin: 0 1.5rem;
+    .hover-text {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -156,7 +156,7 @@ const Profile = () => {
           <Navbar />
           <HeaderProfile dataUser={userSelector.user} />
           <div className="container">
-            <div>
+            <div className="left-container">
               <CardFollowers
                 dataFollowers={userSelector.user.followers}
                 dataFollowing={userSelector.following.data}
@@ -171,7 +171,7 @@ const Profile = () => {
                 <CardGallery dataPost={postsSelector.posted} />
               </div>
             </div>
-            <div>
+            <div className="right-container">
               <CardPosting
                 handleSubmit={handleSubmitPost}
                 dataText={text}

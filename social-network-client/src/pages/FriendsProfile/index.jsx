@@ -117,7 +117,7 @@ const FriendsProfile = () => {
           <ButtonFollow id={id} dataUser={profileSelector.userFriend.data} />
 
           <div className="container">
-            <div>
+            <div className="left-container">
               <CardFollowers
                 dataFollowers={profileSelector.userFriend.data.followers}
                 dataFollowing={profileSelector.following.data}
@@ -132,7 +132,7 @@ const FriendsProfile = () => {
                 <CardGallery dataImage={friendPostSelector.posted} />
               </div>
             </div>
-            <div>
+            <div className="right-container">
               {Object.keys(friendPostSelector.posted).length === 0 ? (
                 <div>
                   <span className="text-14">No posts yet</span>

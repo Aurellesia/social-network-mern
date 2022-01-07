@@ -4,7 +4,7 @@ import { config } from "../../config";
 const PostedContent = ({ dataPost }) => {
   return (
     <>
-      <span className="text-12">{dataPost.text}</span>
+      <span className="text-12 posted-text">{dataPost.text}</span>
       <div>
         {dataPost.images?.map((pict, index) => {
           return (

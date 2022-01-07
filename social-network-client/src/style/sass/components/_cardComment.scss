@@ -1,0 +1,78 @@
+.comment-box {
+  @include box();
+  margin-top: 1rem;
+  height: auto;
+  padding: 0.5rem;
+  .comment-header {
+    margin-bottom: 0.5rem;
+    @include flex($justify: left);
+    .comment-profile-pict {
+      @include picture(2.5rem, 50%);
+      margin-right: 0.5rem;
+    }
+    .comment-name-date {
+      @include flex($align: left, $direc: column);
+    }
+    .show-btn-more {
+      display: block;
+    }
+    .hide-btn-more {
+      display: none;
+    }
+    .btn-more {
+      margin-top: -1rem;
+      margin-left: 19rem;
+      .icon-20 {
+        @include icon(15px);
+      }
+    }
+  }
+  .comment-content {
+    padding-left: 3rem;
+  }
+  .comment-act-section {
+    @include flex($justify: left);
+    margin: 1rem 0 0.5rem 3rem;
+    display: flex;
+    align-items: center;
+    .total-act-comment {
+      margin-left: 14rem;
+    }
+    .text-10-bold {
+      align-self: center;
+      margin-right: 1rem;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.modal-more-comment {
+  background-color: $White;
+  border: 1px solid $SilverSand;
+  border-radius: 20px;
+  height: auto;
+  position: absolute;
+  margin-left: 28%;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  .more-action {
+    width: 7rem;
+    padding: 0.3rem 0;
+    text-align: center;
+    &:hover {
+      background-color: $Blue;
+      cursor: pointer;
+    }
+  }
+}
+.show-modal {
+  display: flex;
+}
+.hide-modal {
+  display: none;
+}

@@ -44,7 +44,7 @@ const CardFollowers = ({
             <span className="text-24-bold">{dataFollowers.length}</span>
           )}
         </span>
-        <span className="text-14" onClick={handleFollowers}>
+        <span className="text-14 hover-text" onClick={handleFollowers}>
           Followers
         </span>
       </div>
@@ -56,8 +56,7 @@ const CardFollowers = ({
             <span className="text-24-bold">{dataFollowing.length}</span>
           )}
         </span>
-
-        <span className="text-14" onClick={handleFollowing}>
+        <span className="text-14 hover-text" onClick={handleFollowing}>
           Following
         </span>
       </div>

@@ -1,0 +1,16 @@
+.action-section {
+  @include flex($justify: space-around);
+  margin: 1rem 0 1rem 0;
+  .action-btn {
+    @include flex();
+    .text-14-bold {
+      align-self: center;
+    }
+    .icon-20 {
+      @include icon(1.25rem, $mr: 0.3rem);
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

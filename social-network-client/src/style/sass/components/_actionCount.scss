@@ -1,0 +1,11 @@
+.comment-section {
+  @include flex($justify: space-between);
+  margin-bottom: 1rem;
+  .text-11 {
+    color: $Gray;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}

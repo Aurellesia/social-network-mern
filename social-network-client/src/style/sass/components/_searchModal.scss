@@ -1,0 +1,19 @@
+.search-box-container {
+  display: flex;
+  padding-left: 24.8rem;
+  .search-box {
+    @include flex($direc: column, $ta: center);
+    width: 16.9rem;
+    height: 20rem;
+    background-color: $White;
+    margin-top: 3rem;
+    border-radius: 20px;
+    position: fixed;
+  }
+  .show-search-box {
+    display: block;
+  }
+  .hide-search-box {
+    display: none;
+  }
+}

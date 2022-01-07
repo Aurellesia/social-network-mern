@@ -1,0 +1,7 @@
+.posted-image-section {
+  @include grid();
+  grid-template-columns: auto;
+  .posted-image {
+    width: 15rem;
+  }
+}

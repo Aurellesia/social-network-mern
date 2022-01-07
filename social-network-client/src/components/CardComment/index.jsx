@@ -33,14 +33,13 @@ const CardComment = ({ dataComment, userId, reloadPost }) => {
   };
   const showMoreComment = (id) => {
     if (idComment === id) {
-      return "show-modal-more";
+      return "show-modal";
     } else {
-      return "hide-modal-more";
+      return "hide-modal";
     }
   };
   const handleDeleteComment = async (id) => {
     await deleteComment(id)
-      // .then((res) => console.log(res))
       .then((res) => dispatch(successDeleteComment(res)))
       .then(() => reloadPost())
       .catch((err) => dispatch(failDeleteComment(err)));
@@ -85,6 +84,7 @@ const CardComment = ({ dataComment, userId, reloadPost }) => {
         >
           <CgMoreVerticalAlt className="icon-20" />
         </div>
+
         <div
           className={`modal-more-comment ${showMoreComment(dataComment._id)}`}
         >

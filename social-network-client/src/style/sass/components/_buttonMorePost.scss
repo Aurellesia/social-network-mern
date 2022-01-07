@@ -1,0 +1,37 @@
+.more-post-section {
+  .btn-more {
+    margin-left: 15.5rem;
+    .icon-20 {
+      @include icon(20px);
+    }
+  }
+  //modal more
+  .modal-more-post {
+    background-color: $White;
+    border: 1px solid $SilverSand;
+    border-radius: 20px;
+    height: auto;
+    position: absolute;
+    margin-left: 10%;
+    margin-top: -1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+    .more-action {
+      width: 7rem;
+      padding: 0.3rem 0;
+      text-align: center;
+      &:hover {
+        background-color: $Blue;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+    }
+  }
+  .show-modal-post {
+    display: flex;
+  }
+  .hide-modal-post {
+    display: none;
+  }
+}
