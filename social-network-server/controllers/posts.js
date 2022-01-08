@@ -58,7 +58,7 @@ const store = async (req, res, next) => {
           .map((item) => item.filename);
       }
       let post = new Post({
-        user: user,
+        user,
         text,
         images: imageFiltered,
         videos: videoFiltered,
@@ -67,7 +67,7 @@ const store = async (req, res, next) => {
       res.json(post);
     } else {
       let post = new Post({
-        user: user._id,
+        user: user,
         text,
       });
       await post.save();

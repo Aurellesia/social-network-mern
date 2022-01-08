@@ -28,7 +28,7 @@ const CardPosting = ({
   };
   return (
     <div className="card-posting">
-      <form className="form-post" onSubmit={handleSubmit}>
+      <form className="form-post">
         <textarea
           className="post-box"
           name="text"
@@ -80,7 +80,12 @@ const CardPosting = ({
             <input id="videos" type="file" multiple accept="video/*" />
           </div> */}
 
-          <button className="btn-post" type="submit" form="form-post">
+          <button
+            className="btn-post"
+            type="submit"
+            form="form-post"
+            onClick={handleSubmit}
+          >
             <span className="text-14">Add Post</span>
           </button>
         </div>

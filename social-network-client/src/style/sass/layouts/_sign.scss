@@ -15,7 +15,7 @@
       }
     }
     .sign-input {
-      @include input(70%);
+      @include input(75%);
       margin: 0.5rem 0;
     }
     .sign-btn {
@@ -25,6 +25,7 @@
     }
   }
   .text-14 {
+    color: $Gray;
     a {
       &:hover {
         text-decoration: underline;
